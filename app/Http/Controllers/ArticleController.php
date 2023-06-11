@@ -7,6 +7,11 @@ use App\Models\Article;
 
 class ArticleController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['index', 'detail']);
+    }
+
     public function index()
     {
 
@@ -34,11 +39,10 @@ class ArticleController extends Controller
 
     public function create()
     {
-
         $validator = validator(request()->all(), [
             "title" => "required",
             "body" => "required",
-            "caregory_id" => "required",
+            "category_id" => "required",
         ]);
 
         if($validator->fails()) {
