@@ -16,13 +16,17 @@ Route::get('/articles/detail/{id}', [ArticleController::class, 'detail']);
 Route::get('/articles/delete/{id}', [ArticleController::class, 'delete']);
 
 Route::get('/articles/add', [ArticleController::class, 'add']);
-Route::post('/articles/add', [ArticleController::class,'create']);
+Route::post('/articles/add', [ArticleController::class, 'create']);
 
 
-Route::post('/comments/add', [CommentController::class, 'create']);
-Route::get('comments/delete/{id}', [CommentController::class, 'delete']);
-Route::get('comments/edit/{id}', [CommentController::class, 'edit']);
-Route::post('comments/edit/{id}', [CommentController::class, 'update']);
+// grouping all the routes that goes to the same controller
+Route::controller(CommentController::class)->group(function () {
+    Route::post('/comments/add', 'create');
+    Route::get('comments/delete/{id}', 'delete');
+    Route::get('comments/edit/{id}', 'edit');
+    Route::post('comments/edit/{id}', 'update');
+});
+
 
 
 Auth::routes();

@@ -44,11 +44,13 @@
                     {{ $article->created_at->diffForHumans() }}
                 </div>
                 <p class="card-text">{{ $article->body }}</p>
-                @if ($article->user_id == auth()->user()->id)
-                    <a class="btn btn-danger" href="{{ url("/articles/delete/$article->id") }}">
-                        Delete
-                    </a>
-                @endif
+                @auth
+                    @if ($article->user_id == auth()->user()->id)
+                        <a class="btn btn-danger" href="{{ url("/articles/delete/$article->id") }}">
+                            Delete
+                        </a>
+                    @endif
+                @endauth
             </div>
         </div>
 
@@ -62,10 +64,12 @@
                         <li class="list-group-item">
                             <p style="overflow-wrap: break-word">{{ $comment->content }}</p>
                             @if ($comment->user_id == Auth::id())
-                                <a href="{{ url("/comments/delete/$comment->id") }}" class="btn btn-sm btn-danger float-end mx-2">Delete</a>
+                                <a href="{{ url("/comments/delete/$comment->id") }}"
+                                    class="btn btn-sm btn-danger float-end mx-2">Delete</a>
                             @endif
                             @if ($comment->user_id == Auth::id())
-                                <a href="{{ url("/comments/edit/$comment->id") }}" class="btn btn-sm btn-primary float-end">Edit</a>
+                                <a href="{{ url("/comments/edit/$comment->id") }}"
+                                    class="btn btn-sm btn-primary float-end">Edit</a>
                             @endif
 
                             <div class="small mt-2">
