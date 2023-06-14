@@ -9,6 +9,12 @@
             </div>
         @endif
 
+        @if (session('article-delete-success'))
+            <div class="alert alert-success">
+                An article deleted.
+            </div>
+        @endif
+
 
         @foreach ($articles as $article)
             <div class="card mb-2">

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Article;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $user = User::find(auth()->user()->id);
+        $articles = Article::where('user_id', auth()->user()->id)->get();
+        // dd($articles);
+        return view('profile', ["name" => $user->name, "email" => $user->email, "articles" => $articles]);
     }
 }

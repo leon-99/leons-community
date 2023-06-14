@@ -71,6 +71,10 @@ class ArticleController extends Controller
         }
 
         $article->delete();
-        return redirect("/")->with("article-delete-success", "An article deleted");
+        if(request()->from == "profile") {
+            return redirect("/home")->with("article-delete-success", "An article deleted");
+        } else {
+            return redirect("/")->with("article-delete-success", "An article deleted");
+        }
     }
 }
