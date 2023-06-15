@@ -49,21 +49,12 @@
                     {{ $article->created_at->diffForHumans() }}
                 </div>
                 <p class="card-text">{{ $article->body }}</p>
-                @auth
-                    @if ($article->user_id == auth()->user()->id)
-                        <a class="btn btn-outline-danger" href="{{ url("/articles/delete/$article->id") }}">
-                            <i class="fa fa-trash"></i>
-                        </a>
-                    @endif
-                @endauth
-
-                @auth
-                    @if ($article->user_id == Auth::id())
-                    <a class="btn btn-outline-primary mx-4" href="{{ url("/articles/edit/$article->id") }}">
-                        <i class="fa fa-pencil-square"></i>
-                    </a>
-                    @endif
-                @endauth
+                <a class="btn btn-outline-primary mx-2" href="{{ url("/articles/edit/$article->id") }}">
+                    <i class="fa fa-pencil-square"></i>
+                </a>
+                <a class="btn btn-outline-danger" href="{{ url("articles/delete/$article->id") }}">
+                    <i class="fa fa-trash"></i>
+                </a>
             </div>
         </div>
 
@@ -86,7 +77,7 @@
                     <li class="list-group-item active">
                         <b>Comments ({{ count($article->comments) }})</b>
                     </li>
-                    @foreach ($article->comments as $comment)
+                    @foreach ($article->comments->reverse() as $comment)
                         <li class="list-group-item">
                             <p style="overflow-wrap: break-word">{{ $comment->content }}</p>
                             @if ($comment->user_id == Auth::id())

@@ -70,7 +70,7 @@ class ArticleController extends Controller
     public function delete($id)
     {
         $article = Article::find($id);
-        if(Gate::denies('post-delete', $article)) {
+        if(Gate::denies('article-permission', $article)) {
             return back()->with('article-delete-error', "Article delete failed");
         }
 
@@ -91,6 +91,11 @@ class ArticleController extends Controller
     public function update($id)
     {
         $article = Article::find($id);
+
+        if(Gate::denies('article-permission', $article)) {
+            return back()->with('article-edit-error', "Article delete failed");
+        }
+
         $article->title = request()->title;
         $article->body = request()->body;
         $article->save();

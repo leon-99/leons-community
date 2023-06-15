@@ -13,9 +13,11 @@ Route::get('/articles', [ArticleController::class, 'index']);
 
 Route::get('/articles/detail/{id}', [ArticleController::class, 'detail']);
 
-Route::get('/articles/delete/{id}', [ArticleController::class, 'delete']);
+Route::get('/articles/delete/{id}', [ArticleController::class, 'delete'])->name('article-delete');
 
-Route::get('/articles/add', [ArticleController::class, 'add']);
+// named route, can be called using route() function on the a tag's href link.
+Route::get('/articles/add', [ArticleController::class, 'add'])->name('article-add');
+
 Route::post('/articles/add', [ArticleController::class, 'create']);
 
 Route::get('/articles/edit/{id}', [ArticleController::class, 'edit']);

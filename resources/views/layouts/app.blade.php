@@ -34,7 +34,7 @@
                     <!-- Left Side Of Navbar -->
                     @auth
                     <ul class="navbar-nav me-auto">
-                        <li class="nav-item"><a href="{{ url("/articles/add") }}" class="nav-link text-primary">+ New Article</a></li>
+                        <li class="nav-item"><a href="{{ route('article-add') }}" class="nav-link text-primary">+ New Article</a></li>
                     </ul>
                     @endauth
 

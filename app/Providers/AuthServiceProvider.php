@@ -29,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
             return $user->id == $comment->user_id;
         });
 
-        Gate::define('post-delete', function ($user, $article) {
+        Gate::define('article-permission', function ($user, $article) {
             return $user->id == $article->user_id;
         });
 
