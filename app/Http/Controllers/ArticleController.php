@@ -26,10 +26,14 @@ class ArticleController extends Controller
 
     public function detail($id)
     {
-        $data = Article::find($id);
+        $posts = Article::find($id);
+
+        // $posts = Article::with(['comments' => function ($query) {
+        //     $query->latest();
+        // }])->get();
 
         return view('articles.detail', [
-            'article' => $data
+            'article' => $posts
             ]);
     }
 
@@ -76,5 +80,25 @@ class ArticleController extends Controller
         } else {
             return redirect("/")->with("article-delete-success", "An article deleted");
         }
+    }
+
+    public function edit($id)
+    {
+        $article = Article::find($id);
+        return view('articles.article-edit', ["article" => $article]);
+    }
+
+    public function update($id)
+    {
+        $article = Article::find($id);
+        $article->title = request()->title;
+        $article->body = request()->body;
+        $article->save();
+
+
+        if(request()->from == "profile") {
+            return redirect("/home")->with("article-updated", "article updated");
+        }
+        return redirect("/articles/detail/$article->id")->with("article-updated", "article updated");
     }
 }

@@ -34,17 +34,24 @@
                                         by <b>{{ $article->user->name }}</b>
                                     </div>
                                     <p class="card-text">{{ $article->body }}</p>
-                                    <a class="card-link" href="{{ url("/articles/detail/$article->id") }}">
-                                        View Detail &raquo;
+                                    <a class="card-link btn btn-sm btn-outline-success"
+                                        href="{{ url("/articles/detail/$article->id") }}">
+                                        View Detail <i class="fa fa-info"></i>
                                     </a>
 
                                     @auth
                                         @if ($article->user_id == auth()->user()->id)
-                                            <a class="text-danger mx-3" href="{{ url("/articles/delete/$article->id?from=profile") }}">
-                                                Delete Post
+                                            <a class="text-danger mx-4 btn btn-sm btn-outline-danger"
+                                                href="{{ url("/articles/delete/$article->id?from=profile") }}">
+                                                <i class="fa fa-trash"></i>
                                             </a>
                                         @endif
                                     @endauth
+
+                                        <a href="{{ url("/articles/edit/$article->id") }}"
+                                            class="btn btn-sm btn-outline-primary">
+                                            <i class="fa fa-pencil-square"></i>
+                                        </a>
                                 </div>
                             </div>
                         @endforeach

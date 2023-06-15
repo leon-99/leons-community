@@ -25,6 +25,12 @@
             </div>
         @endif
 
+        @if (session('article-updated'))
+            <div class="alert alert-success">
+                Article updated.
+            </div>
+        @endif
+
         @if (session('article-delete-error'))
             <div class="alert alert-warning">
                 Not Authorized to delete the aticle.
@@ -45,9 +51,17 @@
                 <p class="card-text">{{ $article->body }}</p>
                 @auth
                     @if ($article->user_id == auth()->user()->id)
-                        <a class="btn btn-danger" href="{{ url("/articles/delete/$article->id") }}">
-                            Delete
+                        <a class="btn btn-outline-danger" href="{{ url("/articles/delete/$article->id") }}">
+                            <i class="fa fa-trash"></i>
                         </a>
+                    @endif
+                @endauth
+
+                @auth
+                    @if ($article->user_id == Auth::id())
+                    <a class="btn btn-outline-primary mx-4" href="{{ url("/articles/edit/$article->id") }}">
+                        <i class="fa fa-pencil-square"></i>
+                    </a>
                     @endif
                 @endauth
             </div>
@@ -55,7 +69,20 @@
 
         <div class="row">
             <div class="col-12">
-                <ul class="list-group">
+                @guest
+                    <div class="alert alert-secondary">
+                        You must login to comment on this post.
+                    </div>
+                @endguest
+                @auth
+                    <form action="{{ url('/comments/add') }}" method="post" class="pt-2">
+                        @csrf
+                        <input type="hidden" name="article_id" value="{{ $article->id }}">
+                        <textarea name="content" class="form-control mb-2" placeholder="New Comment"></textarea>
+                        <input type="submit" value="Add Comment" class="btn btn-outline-success">
+                    </form>
+                @endauth
+                <ul class="list-group mt-3">
                     <li class="list-group-item active">
                         <b>Comments ({{ count($article->comments) }})</b>
                     </li>
@@ -64,11 +91,13 @@
                             <p style="overflow-wrap: break-word">{{ $comment->content }}</p>
                             @if ($comment->user_id == Auth::id())
                                 <a href="{{ url("/comments/delete/$comment->id") }}"
-                                    class="btn btn-sm btn-danger float-end mx-2">Delete</a>
+                                    class="btn btn-sm btn-outline-danger float-end mx-2"><i class="fa fa-trash"></i></a>
                             @endif
                             @if ($comment->user_id == Auth::id())
                                 <a href="{{ url("/comments/edit/$comment->id") }}"
-                                    class="btn btn-sm btn-primary float-end">Edit</a>
+                                    class="btn btn-sm btn-outline-primary float-end">
+                                    <i class="fa fa-pencil-square"></i>
+                                </a>
                             @endif
 
                             <div class="small mt-2">
@@ -80,14 +109,5 @@
                 </ul>
             </div>
         </div>
-
-        @auth
-            <form action="{{ url('/comments/add') }}" method="post" class="pt-2">
-                @csrf
-                <input type="hidden" name="article_id" value="{{ $article->id }}">
-                <textarea name="content" class="form-control mb-2" placeholder="New Comment"></textarea>
-                <input type="submit" value="Add Comment" class="btn btn-secondary">
-            </form>
-        @endauth
     </div>
 @endsection

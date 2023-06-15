@@ -18,6 +18,9 @@ Route::get('/articles/delete/{id}', [ArticleController::class, 'delete']);
 Route::get('/articles/add', [ArticleController::class, 'add']);
 Route::post('/articles/add', [ArticleController::class, 'create']);
 
+Route::get('/articles/edit/{id}', [ArticleController::class, 'edit']);
+Route::post('/articles/edit/{id}', [ArticleController::class, 'update']);
+
 
 // grouping all the routes that goes to the same controller
 Route::controller(CommentController::class)->group(function () {
