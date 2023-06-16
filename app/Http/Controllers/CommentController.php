@@ -19,6 +19,7 @@ class CommentController extends Controller
         $comment->content = request()->content;
         $comment->article_id = request()->article_id;
         $comment->user_id = auth()->user()->id;
+        $comment->edited = 0;
         $comment->save();
 
         return back();
@@ -53,6 +54,7 @@ class CommentController extends Controller
         }
 
         $comment->content = request()->content;
+        $comment->edited = '1';
         $comment->save();
         return redirect("/articles/detail/$comment->article_id")->with('comment-update-success', 'comment-updated');
     }

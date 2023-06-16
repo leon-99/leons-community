@@ -16,7 +16,8 @@ class CommentFactory extends Factory
         return [
             "content" => $this->faker->paragraph(),
             "article_id" => rand(1, 20),
-            "user_id" => rand(1, 10)
+            "user_id" => rand(1, 10),
+            "edited" => 0
         ];
     }
 }

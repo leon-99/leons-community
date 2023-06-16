@@ -93,7 +93,10 @@
 
                             <div class="small mt-2">
                                 By <b>{{ $comment->user->name }}</b>,
-                                {{ $comment->created_at->diffForHumans() }}
+                                {{ $comment->created_at->diffForHumans() }},
+                                @if ($comment->edited == 1)
+                                    <span class="text-success">Edited</span>
+                                @endif
                             </div>
                         </li>
                     @endforeach

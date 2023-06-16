@@ -28,10 +28,6 @@ class ArticleController extends Controller
     {
         $posts = Article::find($id);
 
-        // $posts = Article::with(['comments' => function ($query) {
-        //     $query->latest();
-        // }])->get();
-
         return view('articles.detail', [
             'article' => $posts
             ]);
