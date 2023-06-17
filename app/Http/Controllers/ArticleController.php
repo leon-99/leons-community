@@ -30,7 +30,7 @@ class ArticleController extends Controller
 
         return view('articles.detail', [
             'article' => $posts
-            ]);
+        ]);
     }
 
 
@@ -50,7 +50,7 @@ class ArticleController extends Controller
             "category_id" => "required",
         ]);
 
-        if($validator->fails()) {
+        if ($validator->fails()) {
             return back()->withErrors($validator);
         }
 
@@ -66,12 +66,12 @@ class ArticleController extends Controller
     public function delete($id)
     {
         $article = Article::find($id);
-        if(Gate::denies('article-delete', $article)) {
+        if (Gate::denies('article-delete', $article)) {
             return back()->with('article-delete-error', "Article delete failed");
         }
 
         $article->delete();
-        if(request()->from == "profile") {
+        if (request()->from == "profile") {
             return redirect("/home")->with("article-delete-success", "An article deleted");
         } else {
             return redirect("/")->with("article-delete-success", "An article deleted");
@@ -85,14 +85,14 @@ class ArticleController extends Controller
         return view('articles.article-edit', [
             "article" => $article,
             "categories" => $categories
-    ]);
+        ]);
     }
 
     public function update($id)
     {
         $article = Article::find($id);
 
-        if(Gate::denies('article-update', $article)) {
+        if (Gate::denies('article-update', $article)) {
             return back()->with('article-edit-error', "Article delete failed");
         }
 
@@ -101,10 +101,6 @@ class ArticleController extends Controller
         $article->category_id = request()->category_id;
         $article->save();
 
-
-        if(request()->from == "profile") {
-            return redirect("/home")->with("article-updated", "article updated");
-        }
         return redirect("/articles/detail/$article->id")->with("article-updated", "article updated");
     }
 }

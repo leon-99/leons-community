@@ -2,7 +2,7 @@
 @section('content')
     @auth
         <div class="container">
-            <form action="{{ url("/articles/edit/$article->id?from=profile") }}" method="post" class="pt-2">
+            <form action="{{ url("/articles/edit/$article->id") }}" method="post" class="pt-2">
                 @csrf
                 <input type="hidden" name="article_id" value="{{ $article->id }}">
                 <input type="hidden" name="user_id" value="{{ $article->user_id }}">
