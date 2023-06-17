@@ -25,14 +25,20 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('comment-permission', function ($user, $comment) {
-            return $user->id == $comment->user_id;
+        Gate::define('comment-delete', function ($user, $comment) {
+            return $user->id == $comment->user_id or $user->id == $comment->article->user_id;
         });
 
-        Gate::define('article-permission', function ($user, $article) {
+        Gate::define('article-delete', function ($user, $article) {
             return $user->id == $article->user_id;
         });
 
-        //
+        Gate::define('comment-update', function ($user, $comment) {
+            return $user->id == $comment->user_id;
+        });
+
+        Gate::define('article-update', function ($user, $article) {
+            return $user->id == $article->user_id;
+        });
     }
 }

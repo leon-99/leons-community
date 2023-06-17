@@ -29,7 +29,7 @@ class CommentController extends Controller
     {
         $comment = Comment::find($id);
 
-        if (Gate::denies('comment-permission', $comment)) {
+        if (Gate::denies('comment-delete', $comment)) {
             return back()->with('comment-delete-error', 'Unauthorize');
         }
 
@@ -49,7 +49,7 @@ class CommentController extends Controller
     {
         $comment = Comment::find($id);
 
-        if (Gate::denies('comment-permission', $comment)) {
+        if (Gate::denies('comment-update', $comment)) {
             return back()->with('comment-update-error', 'Unauthorize');
         }
 

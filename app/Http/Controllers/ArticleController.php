@@ -66,7 +66,7 @@ class ArticleController extends Controller
     public function delete($id)
     {
         $article = Article::find($id);
-        if(Gate::denies('article-permission', $article)) {
+        if(Gate::denies('article-delete', $article)) {
             return back()->with('article-delete-error', "Article delete failed");
         }
 
@@ -81,19 +81,24 @@ class ArticleController extends Controller
     public function edit($id)
     {
         $article = Article::find($id);
-        return view('articles.article-edit', ["article" => $article]);
+        $categories = Category::all();
+        return view('articles.article-edit', [
+            "article" => $article,
+            "categories" => $categories
+    ]);
     }
 
     public function update($id)
     {
         $article = Article::find($id);
 
-        if(Gate::denies('article-permission', $article)) {
+        if(Gate::denies('article-update', $article)) {
             return back()->with('article-edit-error', "Article delete failed");
         }
 
         $article->title = request()->title;
         $article->body = request()->body;
+        $article->category_id = request()->category_id;
         $article->save();
 
 

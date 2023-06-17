@@ -10,7 +10,7 @@
             </div>
         @endif
 
-        <form action="/articles/add" method="post">
+        <form method="post">
             @csrf
             <div class="md-2">
                 <lable>Title</lable>

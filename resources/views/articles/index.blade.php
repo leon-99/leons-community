@@ -21,8 +21,11 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ $article->title }}</h5>
                     <div class="card-subtitle mb-2 text-muted small">
+                        <span>Category: <b>{{$article->category->name}}</b></span><br>
                         {{ $article->created_at->diffForHumans() }}
-                        by <b>{{ $article->user->name }}</b>
+
+                        by <b>{{ $article->user->name }}</b><br>
+                        <span class="text-success">{{count($article->comments)}} comments</span>
                     </div>
                     <p class="card-text">{{ $article->body }}</p>
                     <a class="card-link" href="{{ url("/articles/detail/$article->id") }}">

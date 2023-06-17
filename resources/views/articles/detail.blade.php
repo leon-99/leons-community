@@ -49,12 +49,16 @@
                     {{ $article->created_at->diffForHumans() }}
                 </div>
                 <p class="card-text">{{ $article->body }}</p>
-                <a class="btn btn-outline-primary mx-2" href="{{ url("/articles/edit/$article->id") }}">
-                    <i class="fa fa-pencil-square"></i>
-                </a>
-                <a class="btn btn-outline-danger" href="{{ url("articles/delete/$article->id") }}">
-                    <i class="fa fa-trash"></i>
-                </a>
+                @can('article-update', $article)
+                    <a class="btn btn-outline-primary mx-2" href="{{ url("/articles/edit/$article->id") }}">
+                        <i class="fa fa-pencil-square"></i>
+                    </a>
+                @endcan
+                @can('article-delete', $article)
+                    <a class="btn btn-outline-danger" href="{{ url("articles/delete/$article->id") }}">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                @endcan
             </div>
         </div>
 
@@ -79,21 +83,22 @@
                     </li>
                     @foreach ($article->comments->reverse() as $comment)
                         <li class="list-group-item">
-                            <p style="overflow-wrap: break-word">{{ $comment->content }}</p>
-                            @if ($comment->user_id == Auth::id())
+                            <p style="overflow-wrap: break-word"><b class="text-success">{{ $comment->user->name }}</b> -
+                                {{ $comment->content }}</p>
+                            @can('comment-delete', $comment)
                                 <a href="{{ url("/comments/delete/$comment->id") }}"
                                     class="btn btn-sm btn-outline-danger float-end mx-2"><i class="fa fa-trash"></i></a>
-                            @endif
-                            @if ($comment->user_id == Auth::id())
+                            @endcan
+                            @can('comment-update', $comment)
                                 <a href="{{ url("/comments/edit/$comment->id") }}"
                                     class="btn btn-sm btn-outline-primary float-end">
                                     <i class="fa fa-pencil-square"></i>
                                 </a>
-                            @endif
+                            @endcan
 
                             <div class="small mt-2">
-                                By <b>{{ $comment->user->name }}</b>,
                                 {{ $comment->created_at->diffForHumans() }},
+
                                 @if ($comment->edited == 1)
                                     <span class="text-success">Edited</span>
                                 @endif
