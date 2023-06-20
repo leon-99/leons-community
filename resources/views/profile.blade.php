@@ -3,19 +3,21 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
+            @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+            @endif
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">{{ __('Dashboard') }}</div>
 
-                    <div class="card-body text-center">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        <h5>{{ $name }}</h5>
-                        <p>{{ $email }}</p>
+                    <div class="card-body text-center d-flex">
+                        <div class="col-6"><img src="{{asset('images/profile.png')}}" alt="" class="w-25"></div>
+                        <div class="col-6">
+                            <h5>{{ $name }}</h5>
+                            <p>{{ $email }}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -39,7 +41,7 @@
                                         View Detail <i class="fa fa-info"></i>
                                     </a>
                                     <a href="{{ url("/articles/edit/$article->id") }}"
-                                        class="btn btn-sm btn-outline-primary mx-2">
+                                        class="btn btn-sm btn-outline-success mx-2">
                                         <i class="fa fa-pencil-square"></i>
                                     </a>
                                     <a class="text-danger btn btn-sm btn-outline-danger"

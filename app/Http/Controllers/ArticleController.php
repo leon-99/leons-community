@@ -48,6 +48,7 @@ class ArticleController extends Controller
             "title" => "required",
             "body" => "required",
             "category_id" => "required",
+            "image" => "mimes:jpeg,png,jpg,gif|max:3072"
         ]);
 
         if ($validator->fails()) {
@@ -59,6 +60,9 @@ class ArticleController extends Controller
         $article->body = request()->body;
         $article->category_id = request()->category_id;
         $article->user_id = auth()->user()->id;
+        if(request()->hasFile('image')) {
+            $article->image = request()->file('image')->store('images', 'public');
+        }
         $article->save();
 
         return redirect("/articles");
@@ -99,6 +103,9 @@ class ArticleController extends Controller
         $article->title = request()->title;
         $article->body = request()->body;
         $article->category_id = request()->category_id;
+        if(request()->hasFile('image')) {
+            $article->image = request()->file('image')->store('images', 'public');
+        }
         $article->save();
 
         return redirect("/articles/detail/$article->id")->with("article-updated", "article updated");

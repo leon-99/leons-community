@@ -18,17 +18,25 @@
 
         @foreach ($articles as $article)
             <div class="card mb-2">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $article->title }}</h5>
-                    <div class="card-subtitle mb-2 text-muted small">
-                        <span>Category: <b>{{$article->category->name}}</b></span><br>
-                        {{ $article->created_at->diffForHumans() }}
+                <div class="card-body row">
+                    <div class="col-md-6">
+                        <h5 class="card-title">{{ $article->title }}</h5>
+                        <div class="card-subtitle mb-2 text-muted small">
+                            <span>Category: <b>{{ $article->category->name }}</b></span><br>
+                            {{ $article->created_at->diffForHumans() }}
 
-                        by <b>{{ $article->user->name }}</b><br>
-                        <span class="text-success">{{count($article->comments)}} comments</span>
+                            by <b>{{ $article->user->name }}</b><br>
+                            <span class="text-success">{{ count($article->comments) }} comments</span>
+                        </div>
+                        <p class="card-text" style="white-space: pre-wrap;">{{ substr($article->body, 0, 200) . ' . . .' }}
+                        </p>
                     </div>
-                    <p class="card-text">{{ $article->body }}</p>
-                    <a class="card-link" href="{{ url("/articles/detail/$article->id") }}">
+                    @if (isset($article->image))
+                        <div class="col-md-6 d-flex justify-content-center align-items-center">
+                            <img src="{{ asset('storage/' . $article->image) }}" class="img-thumbnail my-4 w-50">
+                        </div>
+                    @endif
+                    <a class="card-link text-success" href="{{ url("/articles/detail/$article->id") }}">
                         View Detail &raquo;
                     </a>
                 </div>
