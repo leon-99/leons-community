@@ -9,7 +9,7 @@
                 </div>
             @endif
             <div class="col-md-8">
-                <div class="card">
+                <div class="card border-0 shadow">
                     <div class="card-header">{{ __('Dashboard') }}</div>
 
                     <div class="card-body text-center d-flex">
@@ -23,12 +23,12 @@
             </div>
 
             <div class="col-md-8 mt-3">
-                <div class="card">
+                <div class="card border-0 shadow">
                     <div class="card-header">{{ __('Your Posts') }}</div>
 
                     <div class="card-body">
                         @foreach ($articles as $article)
-                            <div class="card mb-2">
+                            <div class="card mb-2 border-0 shadow">
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $article->title }}</h5>
                                     <div class="card-subtitle mb-2 text-muted small">

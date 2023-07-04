@@ -17,7 +17,7 @@
 
 
         @foreach ($articles as $article)
-            <div class="card mb-2">
+            <div class="card mb-2 border-0 shadow">
                 <div class="card-body row">
                     <div class="col-md-6">
                         <h5 class="card-title">{{ $article->title }}</h5>
@@ -42,5 +42,6 @@
                 </div>
             </div>
         @endforeach
+        </div>
     </div>
 @endsection

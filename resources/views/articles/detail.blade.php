@@ -38,7 +38,7 @@
         @endif
 
 
-        <div class="card mb-2 row flex-row">
+        <div class="card mb-4 row flex-row shadow border-0">
             <div class="col-md-6">
                 <div class="card-body">
                     <h5 class="card-title">{{ $article->title }}
@@ -75,7 +75,7 @@
         <div class="row">
             <div class="col-12">
                 @guest
-                    <div class="alert alert-secondary">
+                    <div class="alert alert-secondary shadow border-0">
                         You must login to comment on this post.
                     </div>
                 @endguest
@@ -87,8 +87,8 @@
                         <input type="submit" value="Add Comment" class="btn btn-success">
                     </form>
                 @endauth
-                <ul class="list-group mt-3">
-                    <li class="list-group-item active">
+                <ul class="list-group mt-3 shadow border-0">
+                    <li class="list-group-item">
                         <b>Comments ({{ count($article->comments) }})</b>
                     </li>
                     @foreach ($article->comments->reverse() as $comment)
