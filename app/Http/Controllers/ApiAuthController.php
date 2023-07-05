@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Hash;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class ApiAuthController extends Controller
 {
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
         $fields = $request->validate([
             'name' => 'required',
             'email' => 'required|string|unique:users,email',
@@ -31,7 +32,38 @@ class ApiAuthController extends Controller
         ];
 
         return response($response, 201);
+    }
 
+    public function login(Request $request)
+    {
+        $fields = $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string'
+        ]);
 
+        $user = User::where('email', $fields['email'])->first();
+
+        if (!$user || !Hash::check($fields['password'], $user->password)) {
+            return response([
+                'message' => 'bad creds'
+            ], 401);
+        };
+
+        $token = $user->createToken('mapptoken')->plainTextToken;
+
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        return response($response, 201);
+    }
+
+    public function logout(Request $request)
+    {
+        $request->user()->tokens()->delete();
+        return [
+            "message" => "Logged out successfully"
+        ];
     }
 }

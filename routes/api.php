@@ -21,13 +21,16 @@ Route::get('/articles', [ArticleApiController::class, 'index']);
 Route::get('/articles/{id}', [ArticleApiController::class, 'show']);
 Route::get('/articles/search/{title}', [ArticleApiController::class, 'search']);
 Route::post('/register', [ApiAuthController::class, 'register']);
+Route::post('/login', [ApiAuthController::class, 'login']);
 
 
 // protected routes
 Route::group(["middleware" => ['auth:sanctum']], function() {
     Route::post('/articles', [ArticleApiController::class, 'store']);
     Route::put('/articles/{id}', [ArticleApiController::class, 'update']);
-    Route::delete('/articles/{id}', [ArticleApiController::class, 'destory']);
+    Route::delete('/articles/{id}', [ArticleApiController::class, 'destroy']);
+
+    Route::post('/logout', [ApiAuthController::class, 'logout']);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
