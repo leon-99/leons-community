@@ -40,9 +40,9 @@ class ArticleApiController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show($id)
     {
-        return $article;
+        return Article::find($id);
     }
 
     /**
@@ -52,8 +52,9 @@ class ArticleApiController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(Request $request, $id)
     {
+        $article = Article::find($id);
         $article->update($request->all());
         return $article;
     }
@@ -64,8 +65,9 @@ class ArticleApiController extends Controller
      * @param  \App\Models\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy($id)
     {
+        $article = Article::find($id);
         return $article->delete();
     }
 
