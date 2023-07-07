@@ -1,7 +1,9 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        {{ $articles->links() }}
+        <div class="sticky-top">
+            {{ $articles->links() }}
+        </div>
 
         @if (session('info'))
             <div class="alert alert-info">

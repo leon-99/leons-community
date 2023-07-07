@@ -27,7 +27,6 @@ class HomeController extends Controller
     {
         $user = User::find(auth()->user()->id);
         $articles = Article::where('user_id', auth()->user()->id)->get();
-        // dd($articles);
-        return view('profile', ["name" => $user->name, "email" => $user->email, "articles" => $articles]);
+        return view('profile', ['user' => $user, "articles" => $articles]);
     }
 }

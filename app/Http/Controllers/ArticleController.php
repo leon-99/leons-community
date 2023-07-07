@@ -24,12 +24,10 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function detail($id)
+    public function detail(Article $article)
     {
-        $posts = Article::find($id);
-
         return view('articles.detail', [
-            'article' => $posts
+            'article' => $article
         ]);
     }
 
@@ -67,9 +65,8 @@ class ArticleController extends Controller
 
         return redirect("/articles");
     }
-    public function delete($id)
+    public function delete(Article $article)
     {
-        $article = Article::find($id);
         if (Gate::denies('article-delete', $article)) {
             return back()->with('article-delete-error', "Article delete failed");
         }
@@ -82,9 +79,8 @@ class ArticleController extends Controller
         }
     }
 
-    public function edit($id)
+    public function edit(Article $article)
     {
-        $article = Article::find($id);
         $categories = Category::all();
         return view('articles.article-edit', [
             "article" => $article,
@@ -92,10 +88,8 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function update($id)
+    public function update(Article $article)
     {
-        $article = Article::find($id);
-
         if (Gate::denies('article-update', $article)) {
             return back()->with('article-edit-error', "Article delete failed");
         }
