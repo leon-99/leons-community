@@ -37,38 +37,48 @@
             </div>
         @endif
 
-
-        <div class="card mb-4 row flex-row shadow border-0">
-            <div class="col-md-6">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $article->title }}
-                    </h5>
-                    <span class="badge badge-pill text-monospace text-light bg-dark mb-2">Category:
-                        {{ $article->category->name }}</span>
-                    <div class="card-subtitle text-muted small">
-                        by <b>{{ $article->user->name }}</b>
-                        {{ $article->created_at->diffForHumans() }}
+        <div class="card mb-2 border-0 shadow">
+            <div class="card-body">
+                <div class="row d-flex justify-content-start">
+                    <div class="col-md-1 text-center pe-0">
+                        <img src="{{ asset('storage/' . $article->user->profile) }}" alt=""
+                            class="w-50 rounded-circle">
                     </div>
-                    <p class="card-text" style="white-space: pre-wrap;">{{ $article->body }}</p>
+                    <div class="col-md-11 ps-0">
+                        <a href="/user/view/{{$article->user_id}}" class="text-reset text-decoration-none"><b class="d-block">{{ $article->user->name }}</b></a>
+                        <small>{{ $article->created_at->diffForHumans() }}</small>
+                    </div>
                 </div>
-            </div>
-            @if (isset($article->image))
-                <div class="col-md-6 d-flex justify-content-center align-items-center">
-                    <img src="{{ asset('storage/' . $article->image) }}" class="img-thumbnail my-4 ">
-                </div>
-            @endif
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <h5 class="card-title">{{ $article->title }}</h5>
+                        <div class="card-subtitle mb-2 text-muted small">
+                            <span>Category: <b>{{ $article->category->name }}</b></span>
 
-            <div class="mb-4">
-                @can('article-update', $article)
-                <a class="btn btn-success mx-2" href="{{ url("/articles/edit/$article->id") }}">
-                    <i class="fa fa-pencil-square"></i>
-                </a>
-            @endcan
-            @can('article-delete', $article)
-                <a class="btn btn-danger" href="{{ url("articles/delete/$article->id") }}">
-                    <i class="fa fa-trash"></i>
-                </a>
-            @endcan
+
+                        </div>
+                        <p class="card-text">
+                            {{$article->body}}
+                        </p>
+                    </div>
+                    @if (isset($article->image))
+                        <div class="col-md-6 d-flex justify-content-center align-items-center">
+                            <img src="{{ asset('storage/' . $article->image) }}" class="img-thumbnail my-4 w-50">
+                        </div>
+                    @endif
+                </div>
+                <div class="mb-4">
+                    @can('article-update', $article)
+                        <a class="btn btn-success mx-2" href="{{ url("/articles/edit/$article->id") }}">
+                            <i class="fa fa-pencil-square"></i>
+                        </a>
+                    @endcan
+                    @can('article-delete', $article)
+                        <a class="btn btn-danger" href="{{ url("articles/delete/$article->id") }}">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    @endcan
+                </div>
             </div>
         </div>
 
@@ -93,26 +103,31 @@
                     </li>
                     @foreach ($article->comments->reverse() as $comment)
                         <li class="list-group-item">
-                            <p style="overflow-wrap: break-word"><b class="text-success">{{ $comment->user->name }}</b> -
-                                {{ $comment->content }}</p>
+                            <div class="row d-flex justify-content-start">
+                                <div class="col-md-1 text-center pe-0 d-flex justify-content-center align-items-center">
+                                    <img src="{{ asset('storage/' . $comment->user->profile) }}" alt=""
+                                        class="rounded-circle" style="width: 40%;">
+                                </div>
+                                <div class="col-md-11 ps-0">
+
+                                    <a href="/user/view/{{$comment->user_id}}" class="text-reset text-decoration-none"><b class="d-block">{{ $comment->user->name }}</b></a>
+                                    <small>{{ $comment->created_at->diffForHumans() }}</small>
+                                    @if ($comment->edited == 1)
+                                            <small> | <span class="text-success">Edited</span></small>
+                                        @endif
+
+                                </div>
+                            </div>
+                            <p class="mt-3">{{ $comment->content }}</p>
                             @can('comment-delete', $comment)
                                 <a href="{{ url("/comments/delete/$comment->id") }}"
                                     class="btn btn-sm btn-danger float-end mx-2"><i class="fa fa-trash"></i></a>
                             @endcan
                             @can('comment-update', $comment)
-                                <a href="{{ url("/comments/edit/$comment->id") }}"
-                                    class="btn btn-sm btn-success float-end">
+                                <a href="{{ url("/comments/edit/$comment->id") }}" class="btn btn-sm btn-success float-end">
                                     <i class="fa fa-pencil-square"></i>
                                 </a>
                             @endcan
-
-                            <div class="small">
-                                {{ $comment->created_at->diffForHumans() }},
-
-                                @if ($comment->edited == 1)
-                                    <span class="text-success">Edited</span>
-                                @endif
-                            </div>
                         </li>
                     @endforeach
                 </ul>

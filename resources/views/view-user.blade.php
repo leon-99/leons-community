@@ -11,12 +11,7 @@
             <div class="col-md-8">
                 <div class="card border-0 shadow">
                     <div class="card-header d-flex">
-                        <div class="mt-1">{{ __('Dashboard') }}</div>
-                        <div class="ms-auto">
-                            <a href="/user/edit/{{ $user->id }}"
-                                class="profile-settings btn btn-outline-dark btn-sm">Profile Settings <i
-                                    class="fa fa-cog"></i></a>
-                        </div>
+                        <div class="mt-1">Profile</div>
                     </div>
 
                     <div class="card-body text-center d-flex">
@@ -34,10 +29,9 @@
             <div class="col-md-8 mt-3">
                 <div class="card border-0 shadow">
                     <div class="card-header">{{ __('Your Posts') }}</div>
-
                     <div class="card-body">
-                        @unless ($articles->count() == 0)
-                            @foreach ($articles as $article)
+                        @unless (false)
+                            @foreach ($user->article as $article)
                                 <div class="card mb-2 border-0 shadow">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $article->title }}</h5>
@@ -50,14 +44,14 @@
                                             href="{{ url("/articles/detail/$article->id") }}">
                                             View Detail <i class="fa fa-info"></i>
                                         </a>
-                                        <a href="{{ url("/articles/edit/$article->id") }}"
+                                        {{-- <a href="{{ url("/articles/edit/$article->id") }}"
                                             class="btn btn-sm btn-outline-success mx-2">
                                             <i class="fa fa-pencil-square"></i>
                                         </a>
                                         <a class="text-danger btn btn-sm btn-outline-danger"
                                             href="{{ url("/articles/delete/$article->id?from=profile") }}">
                                             <i class="fa fa-trash"></i>
-                                        </a>
+                                        </a> --}}
 
                                     </div>
                                 </div>

@@ -3,10 +3,23 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\Models\User;
+use App\Models\Article;
+
 
 class UserController extends Controller
 {
+
+    public function show($id) {
+        $user = User::find($id);
+        if(auth()->user() and auth()->user()->id == $id) {
+            return redirect('home');
+        }
+        return view('view-user', [
+            'user' => $user
+        ]);
+    }
     public function edit($id)
     {
         $user = User::find($id);
@@ -17,6 +30,11 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        if (Gate::denies('user-update', $id)) {
+            return back()->with('user-update-error', "user update failed");
+        }
+
         $user = User::find($id);
         $user->name = $request->name;
         if($request->hasFile('profile')) {
@@ -24,5 +42,15 @@ class UserController extends Controller
         }
         $user->save();
         return redirect()->route('home');
+    }
+    public function delete($id) {
+        if (Gate::denies('user-update', $id)) {
+            return back()->with('user-delete-error', "account delete failed");
+        }
+        $user = User::find($id);
+        Article::where('user_id', '=', $user->id)->delete();
+        auth()->logout();
+        $user->delete();
+        return redirect('/');
     }
 }

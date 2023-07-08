@@ -30,8 +30,10 @@ Route::controller(CommentController::class)->group(function () {
 });
 
 Route::controller(UserController::class,)->group(function() {
+    Route::get('/user/view/{id}', 'show');
     Route::get('/user/edit/{id}', 'edit');
     Route::post('/user/edit/{id}', 'update');
+    Route::post('/user/delete/{id}', 'delete');
 });
 
 
