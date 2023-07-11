@@ -2,8 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ArticleApiController;
-use App\Http\Controllers\ApiAuthController;
+use App\Http\Controllers\API\ArticleController;
+use App\Http\Controllers\API\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,27 +16,25 @@ use App\Http\Controllers\ApiAuthController;
 |
 */
 
-// public routes
-Route::get('/articles', [ArticleApiController::class, 'index']);
-Route::get('/articles/{id}', [ArticleApiController::class, 'show']);
-Route::get('/articles/search/{title}', [ArticleApiController::class, 'search']);
-Route::post('/register', [ApiAuthController::class, 'register']);
-Route::post('/login', [ApiAuthController::class, 'login']);
 
+Route::controller(ArticleController::class)->group(function () {
+    Route::get('/articles', 'index');
+    Route::get('/articles/{id}', 'show');
+    Route::get('/articles/search/{title}', 'search');
 
-// protected routes
-Route::group(["middleware" => ['auth:sanctum']], function() {
-    Route::post('/articles', [ArticleApiController::class, 'store']);
-    Route::put('/articles/{id}', [ArticleApiController::class, 'update']);
-    Route::delete('/articles/{id}', [ArticleApiController::class, 'destroy']);
+    Route::group(['middleware' => 'auth:sanctum'], function () {
+        Route::post('/articles', 'store');
+        Route::put('/articles/{id}', 'update');
+        Route::delete('/articles/{id}', 'destroy');
+    });
+});
 
-    Route::post('/logout', [ApiAuthController::class, 'logout']);
+Route::controller(UserController::class)->group(function() {
+    Route::post('/register', 'register');
+    Route::post('/login', 'login');
+    Route::post('/logout', 'logout')->middleware('auth:sanctum');
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-// resource routes, laravel can define them automatically, but can't control the auth.
-// Route::apiResource('/articles', ArticleApiController::class);
-

@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
+use App\Http\Controllers\Controller;
 
-use App\Models\Article;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class ArticleApiController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +15,7 @@ class ArticleApiController extends Controller
      */
     public function index()
     {
-        return Article::all();
+        return Category::all();
     }
 
     /**
@@ -25,54 +26,51 @@ class ArticleApiController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            "title" => "required",
-            "body" => "required",
-            "category_id" => "required",
-            "user_id" => "required"
-        ]);
-        return Article::create($request->all());
+        $category = new Category;
+        $category->name = request()->name;
+        $category->save();
+
+        return $category;
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        return Article::find($id);
+        return Category::find($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update($id)
     {
-        $article = Article::find($id);
-        $article->update($request->all());
-        return $article;
+        $category = Category::find($id);
+        $category->name = request()->name;
+        $category->save();
+
+        return $category;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Article  $article
+     * @param  \App\Models\Category  $category
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        $article = Article::find($id);
-        return $article->delete();
-    }
+        $category = Category::find($id);
+        $category->delete();
 
-    public function search($title)
-    {
-        return Article::where('title', 'like', '%'.$title.'%')->get();
+        return $category;
     }
 }

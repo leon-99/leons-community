@@ -50,7 +50,7 @@
                     </div>
                     <span class="text-success d-block mt-4">{{ count($article->comments) }} comments</span>
 
-                    <a class="card-link text-success" href="{{ url("/articles/detail/$article->id") }}">
+                    <a class="card-link text-success" href="{{ route('article-detail', $article->id) }}">
                         View Detail &raquo;
                     </a>
                 </div>

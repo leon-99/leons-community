@@ -7,30 +7,24 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 
 Route::controller(ArticleController::class)->group(function () {
-    Route::get('/', 'index');
+    Route::get('/', 'index')->name('index');
     Route::get('/articles', 'index');
-    Route::get('/articles/detail/{article}', 'detail');
-    // named route, can be called using route() function on the a tag's href link.
+    Route::get('/articles/detail/{article}', 'detail')->name('article-detail');
     Route::get('/articles/delete/{article}', 'delete')->name('article-delete');
     Route::get('/articles/add', 'add')->name('article-add');
-    Route::post('/articles/add', 'create');
-    Route::get('/articles/edit/{article}', 'edit');
-    Route::post('/articles/edit/{article}', 'update');
+    Route::post('/articles/add', 'create')->name('article-create');
+    Route::post('/articles/edit/{article}', 'update')->name('article-update');
 });
-
-
-
 
 // grouping all the routes that goes to the same controller
 Route::controller(CommentController::class)->group(function () {
-    Route::post('/comments/add', 'create');
-    Route::get('comments/delete/{id}', 'delete');
-    Route::get('comments/edit/{id}', 'edit');
-    Route::post('comments/edit/{id}', 'update');
+    Route::post('/comments/add', 'create')->name('comment-add');
+    Route::get('comments/delete/{id}', 'delete')->name('comment-delete');
+    Route::post('comments/edit/{id}', 'update')->name('comment-update');
 });
 
 Route::controller(UserController::class,)->group(function() {
-    Route::get('/user/view/{id}', 'show');
+    Route::get('/user/view/{id}', 'show')->name('user-show');
     Route::get('/user/edit/{id}', 'edit');
     Route::post('/user/edit/{id}', 'update');
     Route::post('/user/delete/{id}', 'delete');

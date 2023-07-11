@@ -47,15 +47,12 @@
                                         </div>
                                         <p class="card-text">{{ $article->body }}</p>
                                         <a class="card-link btn btn-sm btn-outline-success"
-                                            href="{{ url("/articles/detail/$article->id") }}">
+                                            href="{{ route('article-detail', $article->id) }}">
                                             View Detail <i class="fa fa-info"></i>
                                         </a>
-                                        <a href="{{ url("/articles/edit/$article->id") }}"
-                                            class="btn btn-sm btn-outline-success mx-2">
-                                            <i class="fa fa-pencil-square"></i>
-                                        </a>
+
                                         <a class="text-danger btn btn-sm btn-outline-danger"
-                                            href="{{ url("/articles/delete/$article->id?from=profile") }}">
+                                            href="{{ route('article-delete', $article->id) }}">
                                             <i class="fa fa-trash"></i>
                                         </a>
 

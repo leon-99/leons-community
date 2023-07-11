@@ -26,8 +26,10 @@ class ArticleController extends Controller
 
     public function detail(Article $article)
     {
+        $categories = Category::all();
         return view('articles.detail', [
-            'article' => $article
+            'article' => $article,
+            "categories" => $categories
         ]);
     }
 
