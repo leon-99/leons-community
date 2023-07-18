@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Models\User;
-use App\Models\Article;
 
 
 class UserController extends Controller
@@ -48,7 +47,6 @@ class UserController extends Controller
             return back()->with('user-delete-error', "account delete failed");
         }
         $user = User::find($id);
-        Article::where('user_id', '=', $user->id)->delete();
         auth()->logout();
         $user->delete();
         return redirect('/');

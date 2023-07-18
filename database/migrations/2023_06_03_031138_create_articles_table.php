@@ -19,7 +19,7 @@ class CreateArticlesTable extends Migration
             $table->text("body");
             $table->text("image")->nullable();
             $table->integer("category_id");
-            $table->integer("user_id");
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -25,9 +25,9 @@ Route::controller(CommentController::class)->group(function () {
 
 Route::controller(UserController::class,)->group(function() {
     Route::get('/user/view/{id}', 'show')->name('user-show');
-    Route::get('/user/edit/{id}', 'edit');
-    Route::post('/user/edit/{id}', 'update');
-    Route::post('/user/delete/{id}', 'delete');
+    Route::get('/user/edit/{id}', 'edit')->name('user-edit');
+    Route::post('/user/edit/{id}', 'update')->name('user-update');
+    Route::post('/user/delete/{id}', 'delete')->name('user-delete');
 });
 
 

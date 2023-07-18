@@ -12,7 +12,7 @@
                 <div class="card border-0 shadow">
                     <div class="card-header d-flex">
                         <div class="mt-1">Update Profile</div>
-                        <form action="/user/edit/{{ $user->id }}" method="POST" class="ms-auto"
+                        <form action="{{ route('user-update', $user->id) }}" method="POST" class="ms-auto"
                             enctype="multipart/form-data">
                             @csrf
                             <div class="ms-auto">
@@ -68,7 +68,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <form action="/user/delete/{{ $user->id }}" method="POST">
+                    <form action="{{ route('user-delete', $user->id) }}" method="POST">
                         @csrf
                         <button href="" type="submit" class="btn btn-danger">Confirm</button>
                     </form>

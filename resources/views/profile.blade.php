@@ -11,9 +11,9 @@
             <div class="col-md-8">
                 <div class="card border-0 shadow">
                     <div class="card-header d-flex">
-                        <div class="mt-1">{{ __('Dashboard') }}</div>
+                        <div class="mt-1">Profile</div>
                         <div class="ms-auto">
-                            <a href="/user/edit/{{ $user->id }}"
+                            <a href="{{ route('user-edit', $user->id) }}"
                                 class="profile-settings btn btn-outline-dark btn-sm">Profile Settings <i
                                     class="fa fa-cog"></i></a>
                         </div>
