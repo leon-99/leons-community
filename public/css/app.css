@@ -14999,3 +14999,8 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+@media (max-width: 2000px) {
+  .profile-image {
+    width: 100%;
+  }
+}

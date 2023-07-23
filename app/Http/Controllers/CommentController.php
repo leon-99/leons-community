@@ -13,42 +13,19 @@ class CommentController extends Controller
     {
         $this->middleware('auth');
     }
-    public function create()
+    public function store(Request $request)
     {
         $comment = new Comment;
-        $comment->content = request()->content;
-        $comment->article_id = request()->article_id;
+        $comment->content = $request->content;
+        $comment->article_id = $request->article_id;
         $comment->user_id = auth()->user()->id;
-        $comment->edited = 0;
         $comment->save();
 
         return back();
     }
 
-    public function delete($id)
+    public function update(Comment $comment)
     {
-        $comment = Comment::find($id);
-
-        if (Gate::denies('comment-delete', $comment)) {
-            return back()->with('comment-delete-error', 'Unauthorize');
-        }
-
-        $comment->delete();
-        return back()->with('comment-delete-success', 'comment deleted');
-    }
-
-
-    public function edit ($id)
-    {
-        $comment = Comment::find($id);
-        return view('articles/comment-edit', [
-            "comment" => $comment
-        ]);
-    }
-    public function update($id)
-    {
-        $comment = Comment::find($id);
-
         if (Gate::denies('comment-update', $comment)) {
             return back()->with('comment-update-error', 'Unauthorize');
         }
@@ -56,6 +33,16 @@ class CommentController extends Controller
         $comment->content = request()->content;
         $comment->edited = '1';
         $comment->save();
-        return redirect("/articles/detail/$comment->article_id")->with('comment-update-success', 'comment-updated');
+        return redirect()->route('article.detail', $comment->article->id)->with('comment-update-success', 'comment-updated');
+    }
+
+    public function destroy(Comment $comment)
+    {
+        if (Gate::denies('comment-delete', $comment)) {
+            return back()->with('comment-delete-error', 'Unauthorize');
+        }
+
+        $comment->delete();
+        return back()->with('comment-delete-success', 'comment deleted');
     }
 }

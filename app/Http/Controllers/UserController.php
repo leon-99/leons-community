@@ -9,44 +9,46 @@ use App\Models\User;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth')->except('show');
+    }
 
-    public function show($id) {
-        $user = User::find($id);
-        if(auth()->user() and auth()->user()->id == $id) {
+    public function show(User $user)
+    {
+        if (auth()->user() and auth()->user()->id == $user->id) {
             return redirect('home');
         }
         return view('view-user', [
             'user' => $user
         ]);
     }
-    public function edit($id)
+    public function edit(User $user)
     {
-        $user = User::find($id);
         return view('update-profile', [
             'user' => $user
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
 
-        if (Gate::denies('user-update', $id)) {
+        if (Gate::denies('user-update', $user->id)) {
             return back()->with('user-update-error', "user update failed");
         }
 
-        $user = User::find($id);
         $user->name = $request->name;
-        if($request->hasFile('profile')) {
+        if ($request->hasFile('profile')) {
             $user->profile = request()->file('profile')->store('profile-pictures', 'public');
         }
         $user->save();
         return redirect()->route('home');
     }
-    public function delete($id) {
-        if (Gate::denies('user-update', $id)) {
+    public function destroy(User $user)
+    {
+        if (Gate::denies('user-update', $user->id)) {
             return back()->with('user-delete-error', "account delete failed");
         }
-        $user = User::find($id);
         auth()->logout();
         $user->delete();
         return redirect('/');

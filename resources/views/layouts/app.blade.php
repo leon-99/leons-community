@@ -56,7 +56,7 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item"><a href="{{ route('article-add') }}" class="nav-link text-success">+ New
+                            <li class="nav-item"><a href="{{ route('article.create') }}" class="nav-link text-success">+ New
                                     Article</a></li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"

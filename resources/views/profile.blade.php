@@ -13,7 +13,7 @@
                     <div class="card-header d-flex">
                         <div class="mt-1">Profile</div>
                         <div class="ms-auto">
-                            <a href="{{ route('user-edit', $user->id) }}"
+                            <a href="{{ route('user.edit', $user) }}"
                                 class="profile-settings btn btn-outline-dark btn-sm">Profile Settings <i
                                     class="fa fa-cog"></i></a>
                         </div>
@@ -47,12 +47,12 @@
                                         </div>
                                         <p class="card-text">{{ $article->body }}</p>
                                         <a class="card-link btn btn-sm btn-outline-success"
-                                            href="{{ route('article-detail', $article->id) }}">
+                                            href="{{ route('article.detail', $article->id) }}">
                                             View Detail <i class="fa fa-info"></i>
                                         </a>
 
                                         <a class="text-danger btn btn-sm btn-outline-danger"
-                                            href="{{ route('article-delete', $article->id) }}">
+                                            href="{{ route('article.delete', $article->id) }}">
                                             <i class="fa fa-trash"></i>
                                         </a>
 

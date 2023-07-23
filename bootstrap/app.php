@@ -50,6 +50,9 @@ $app->singleton(
 | the calling script so we can separate the building of the instances
 | from the actual running of the application and sending responses.
 |
+
 */
+
+$app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 
 return $app;

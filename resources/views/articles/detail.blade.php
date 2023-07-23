@@ -40,12 +40,12 @@
         <div class="card mb-2 border-0 shadow">
             <div class="card-body">
                 <div class="row d-flex justify-content-start">
-                    <div class="col-md-1 text-center pe-0">
+                    <div class="col-3 col-sm-2 col-md-2 col-lg-1 text-center px-0">
                         <img src="{{ asset('storage/' . $article->user->profile) }}" alt=""
-                            class="w-50 rounded-circle">
+                            class="rounded-circle w-50 profile-image">
                     </div>
-                    <div class="col-md-11 ps-0">
-                        <a href="/user/view/{{ $article->user_id }}" class="text-reset text-decoration-none"><b
+                    <div class="col-9 col-sm-10 col-md-10 col-lg-11 ps-0">
+                        <a href="{{ route('user.show', $article->user) }}" class="text-reset text-decoration-none"><b
                                 class="d-block">{{ $article->user->name }}</b></a>
                         <small>{{ $article->created_at->diffForHumans() }}</small>
                     </div>
@@ -75,9 +75,14 @@
                         </a>
                     @endcan
                     @can('article-delete', $article)
-                        <a class="btn btn-danger" href="{{ route('article-delete', $article->id) }}">
+                    <form action="{{ route('article.delete', $article->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger" href="">
                             <i class="fa fa-trash"></i>
-                        </a>
+                        </button>
+                    </form>
+
                     @endcan
                 </div>
             </div>
@@ -91,7 +96,7 @@
                     </div>
                 @endguest
                 @auth
-                    <form action="{{ route('comment-add') }}" method="post" class="pt-2">
+                    <form action="{{ route('comments.store') }}" method="post" class="pt-2">
                         @csrf
                         <input type="hidden" name="article_id" value="{{ $article->id }}">
                         <textarea name="content" class="form-control mb-2" placeholder="New Comment"></textarea>
@@ -105,32 +110,36 @@
                     @foreach ($article->comments->reverse() as $comment)
                         <li class="list-group-item">
                             <div class="row d-flex justify-content-start">
-                                <div class="col-md-1 text-center pe-0 d-flex justify-content-center align-items-center">
+                                <div
+                                    class="col-3 col-sm-2 col-md-2 col-lg-1 text-center pe-0 d-flex justify-content-center align-items-start mt-2">
                                     <img src="{{ asset('storage/' . $comment->user->profile) }}" alt=""
                                         class="rounded-circle" style="width: 40%;">
                                 </div>
-                                <div class="col-md-11 ps-0">
+                                <div class="col-9 col-sm-10 col-md-10 col-lg-11 ps-0">
 
-                                    <a href="/user/view/{{ $comment->user_id }}" class="text-reset text-decoration-none"><b
+                                    <a href="{{ route('user.show', $comment->user) }}" class="text-reset text-decoration-none"><b
                                             class="d-block">{{ $comment->user->name }}</b></a>
                                     <small>{{ $comment->created_at->diffForHumans() }}</small>
                                     @if ($comment->edited == 1)
                                         <small> | <span class="text-success">Edited</span></small>
                                     @endif
-
+                                    <p class="mt-3">{{ $comment->content }}</p>
                                 </div>
                             </div>
-                            <p class="mt-3">{{ $comment->content }}</p>
                             @can('comment-delete', $comment)
-                                <a href="{{ route('comment-delete', $comment->id) }}"
-                                    class="btn btn-sm btn-danger float-end mx-2"><i class="fa fa-trash"></i></a>
+                                <form action="{{ route('comments.destroy', $comment->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger float-end mx-2"><i class="fa fa-trash"></i></button>
+                                </form>
                             @endcan
                             @can('comment-update', $comment)
-                                <a class="btn btn-sm btn-success float-end" data-bs-toggle="modal" data-bs-target="#commentEdit{{$comment->id}}">
+                                <a class="btn btn-sm btn-success float-end" data-bs-toggle="modal"
+                                    data-bs-target="#commentEdit{{ $comment->id }}">
                                     <i class="fa fa-pencil-square"></i>
                                 </a>
                                 <!-- comment update modal -->
-                                <div class="modal fade" id="commentEdit{{$comment->id}}" tabindex="-1" role="dialog"
+                                <div class="modal fade" id="commentEdit{{ $comment->id }}" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
                                         <div class="modal-content">
@@ -140,9 +149,10 @@
                                             </div>
 
                                             <div class="modal-footer">
-                                                <form action="{{ url("/comments/edit/$comment->id") }}" method="post"
+                                                <form action="{{ route('comments.update', $comment->id) }}" method="POST"
                                                     class="pt-2 w-100">
                                                     @csrf
+                                                    @method('PUT')
                                                     <input type="hidden" name="article_id" value="{{ $comment->article_id }}">
                                                     <input type="hidden" name="user_id" value="{{ $comment->user_id }}">
                                                     <textarea name="content" class="form-control mb-2">{{ $comment->content }}</textarea>
@@ -170,9 +180,10 @@
                 </div>
 
                 <div class="modal-footer">
-                    <form action="{{ route('article-update', $article->id) }}" method="post" class="pt-2 w-100"
+                    <form action="{{ route('article.update', $article->id) }}" method="post" class="pt-2 w-100"
                         enctype="multipart/form-data">
                         @csrf
+                        @method('PUT')
                         <input type="hidden" name="article_id" value="{{ $article->id }}">
                         <input type="hidden" name="user_id" value="{{ $article->user_id }}">
                         <div class="form-group">
