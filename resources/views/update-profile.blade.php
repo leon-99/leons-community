@@ -3,12 +3,18 @@
 @section('content')
     <div class="container">
         <div class="row justify-content-center">
-            @if (session('status'))
+            <div class="col-md-10">
+                @if (session('status'))
                 <div class="alert alert-success" role="alert">
                     {{ session('status') }}
                 </div>
             @endif
-            <div class="col-md-10">
+
+            @if (session('password-changed'))
+                <div class="alert alert-success">
+                    Password updated successfully.
+                </div>
+            @endif
                 <div class="card border-0 shadow">
                     <div class="card-header d-flex">
                         <div class="mt-1">Update Profile</div>
@@ -16,11 +22,6 @@
                             enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
-                            <div class="ms-auto">
-                                <button type="submit" class="profile-settings btn btn-outline-dark btn-sm">Save
-                                    <i class="fa fa-floppy-o"></i>
-                                </button>
-                            </div>
                     </div>
 
                     <div class="card-body text-center d-flex justify-content-between">
@@ -36,6 +37,61 @@
                                 <label>Name</label>
                                 <input type="text" class="form-control" name="name" value="{{ $user->name }}">
                             </div>
+                        </div>
+                    </div>
+                    <div class="row text-center mb-3">
+                        <div class="col-12">
+                            <button type="submit" class="profile-settings btn btn-outline-dark btn-sm">Save
+                                <i class="fa fa-floppy-o"></i>
+                            </button>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+
+            {{-- password update --}}
+            <div class="col-md-10 mt-5">
+                <div class="card border-0 shadow">
+                    <div class="card-header d-flex">
+                        <div class="mt-1">Update Password</div>
+                        <form action="{{ route('user.password.update', $user) }}" method="POST" class="ms-auto">
+                            @csrf
+                            @method('PUT')
+                    </div>
+
+                    <div class="card-body text-center d-flex flex-column justify-content-center align-items-center">
+
+                        <div class="col-6 me-1">
+
+                            <label>Old password</label>
+                            <input type="password" class="form-control mt-2" name="old_password">
+                            @error('failed')
+                                <small class="text-danger">old password does't match</small>
+                            @enderror
+                            @error('password')
+                                <small class="text-danger">old password required</small>
+                            @enderror
+                        </div>
+                        <div class="col-6 ">
+                            <div class="my-2">
+                                <label>New password</label>
+                                <input type="password" class="form-control" name="password">
+                            </div>
+                        </div>
+                        <div class="col-6 ">
+                            <div class="my-2">
+                                <label>Confirm password</label>
+                                <input type="password" class="form-control" name="password_confirmation">
+                                @error('password')
+                                    <small class="text-danger">password comfirmation does not match.</small>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-12 mt-3">
+                            <button type="submit" class="profile-settings btn btn-outline-dark btn-sm">Update Password
+                                <i class="fa fa-cog"></i>
+                            </button>
                         </div>
                         </form>
                     </div>

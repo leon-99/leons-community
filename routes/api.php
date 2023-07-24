@@ -19,13 +19,13 @@ use App\Http\Controllers\API\UserController;
 
 Route::controller(ArticleController::class)->group(function () {
     Route::get('/articles', 'index');
-    Route::get('/articles/{id}', 'show');
+    Route::get('/articles/{article}', 'show');
     Route::get('/articles/search/{title}', 'search');
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::post('/articles', 'store');
-        Route::put('/articles/{id}', 'update');
-        Route::delete('/articles/{id}', 'destroy');
+        Route::put('/articles/{article}', 'update');
+        Route::delete('/articles/{article}', 'destroy');
     });
 });
 

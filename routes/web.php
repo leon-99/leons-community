@@ -23,6 +23,7 @@ Route::controller(ArticleController::class)->group(function () {
 Route::resource('comments', CommentController::class)->only('store', 'update', 'destroy');
 
 // user routes
+Route::put('/user/update-password/{user}', [UserController::class, 'updatePassword'])->name('user.password.update');
 Route::resource('user', UserController::class)->except('index', 'create', 'store');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

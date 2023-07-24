@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 
@@ -52,5 +53,26 @@ class UserController extends Controller
         auth()->logout();
         $user->delete();
         return redirect('/');
+    }
+
+    public function updatePassword(Request $request, User $user)
+    {
+        $validator = validator(request()->all(), [
+            'old_password' => 'required|string',
+            'password' => 'required|string|confirmed'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator);
+        };
+
+        if (!Hash::check($request['old_password'], $user->password)) {
+           return back()->withErrors(['failed' => 'old password does not match']);
+        };
+
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return back()->with('password-changed', 'password-changed');
     }
 }
