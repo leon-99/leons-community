@@ -63,14 +63,14 @@
                         </p>
                     </div>
                     @if (isset($article->image))
-                        <div class="col-md-6 d-flex justify-content-center align-items-center">
+                        <div class="col-md-6 d-flex justify-content-center align-items-start">
                             <img src="{{ asset('storage/' . $article->image) }}" class="img-thumbnail my-4 w-50">
                         </div>
                     @endif
                 </div>
-                <div class="my-4">
+                <div class="my-4 d-flex">
                     @can('article-update', $article)
-                        <a class="btn btn-success mx-2" data-bs-toggle="modal" data-bs-target="#articleEdit">
+                        <a class="btn btn-sm btn-success mx-2" data-bs-toggle="modal" data-bs-target="#articleEdit">
                             <i class="fa fa-pencil-square"></i>
                         </a>
                     @endcan
@@ -78,7 +78,7 @@
                     <form action="{{ route('article.delete', $article->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn btn-danger" href="">
+                        <button type="submit" class="btn btn-sm btn-danger">
                             <i class="fa fa-trash"></i>
                         </button>
                     </form>

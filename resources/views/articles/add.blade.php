@@ -8,7 +8,7 @@
             </div>
         @endif --}}
 
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data" action="{{route('article.store')}}">
             @csrf
             <div class="mb-2">
                 <lable class="form-label">Title</lable>

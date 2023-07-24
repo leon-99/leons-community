@@ -1,9 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <div>
-            {{ $articles->links() }}
-        </div>
+
 
         @if (session('info'))
             <div class="alert alert-info">
@@ -56,6 +54,9 @@
                 </div>
             </div>
         @endforeach
+        <div>
+            {{ $articles->links() }}
+        </div>
     </div>
     </div>
 @endsection

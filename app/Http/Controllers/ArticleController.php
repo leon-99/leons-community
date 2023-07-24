@@ -12,7 +12,7 @@ class ArticleController extends Controller
 {
     public function index()
     {
-        $data = Article::latest()->paginate(5);
+        $data = Article::latest()->paginate(10);
 
         return view("articles.index", [
             "articles" => $data
@@ -86,7 +86,7 @@ class ArticleController extends Controller
         // Storage::delete($article->image);
         // Storage::disk('local')->delete($article->image);
         $article->delete();
-        if (request()->from == "profile") {
+        if (request()->has('from-profile') == "profile") {
             return redirect("/home")->with("article-delete-success", "An article deleted");
         } else {
             return redirect("/")->with("article-delete-success", "An article deleted");

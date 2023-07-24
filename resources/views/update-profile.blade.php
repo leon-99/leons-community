@@ -5,16 +5,16 @@
         <div class="row justify-content-center">
             <div class="col-md-10">
                 @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
-            @endif
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
 
-            @if (session('password-changed'))
-                <div class="alert alert-success">
-                    Password updated successfully.
-                </div>
-            @endif
+                @if (session('password-changed'))
+                    <div class="alert alert-success">
+                        Password updated successfully.
+                    </div>
+                @endif
                 <div class="card border-0 shadow">
                     <div class="card-header d-flex">
                         <div class="mt-1">Update Profile</div>
@@ -70,23 +70,25 @@
                                 <small class="text-danger">old password does't match</small>
                             @enderror
                             @error('password')
-                                <small class="text-danger">old password required</small>
+                                <small class="text-danger">old password does't match</small>
                             @enderror
                         </div>
-                        <div class="col-6 ">
-                            <div class="my-2">
-                                <label>New password</label>
-                                <input type="password" class="form-control" name="password">
+                        <div class="row">
+                            <div class="col-6 ">
+                                <div class="my-2">
+                                    <label>New password</label>
+                                    <input type="password" class="form-control" name="password">
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-6 ">
-                            <div class="my-2">
-                                <label>Confirm password</label>
-                                <input type="password" class="form-control" name="password_confirmation">
-                                @error('password')
-                                    <small class="text-danger">password comfirmation does not match.</small>
-                                @enderror
+                            <div class="col-6 ">
+                                <div class="my-2">
+                                    <label>Confirm password</label>
+                                    <input type="password" class="form-control" name="password_confirmation">
+                                </div>
                             </div>
+                            @error('password')
+                                <small class="text-danger">password comfirmation does not match.</small>
+                            @enderror
                         </div>
                         <div class="col-12 mt-3">
                             <button type="submit" class="profile-settings btn btn-outline-dark btn-sm">Update Password

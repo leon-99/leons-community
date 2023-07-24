@@ -10,8 +10,8 @@ use App\Http\Controllers\UserController;
 Route::controller(ArticleController::class)->group(function () {
     Route::group(['middleware' => 'auth'], function () {
         Route::get('/articles/create', 'create')->name('article.create');
-        Route::get('/articles/delete/{article}', 'delete')->name('article.delete');
-        Route::post('/articles', 'store')->name('article.store');
+        Route::delete('/articles/delete/{article}', 'delete')->name('article.delete');
+        Route::post('/articles/store', 'store')->name('article.store');
         Route::post('/articles/edit/{article}', 'update')->name('article.update');
     });
 
