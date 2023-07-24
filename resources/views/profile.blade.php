@@ -47,7 +47,7 @@
                                         </div>
                                         <p class="card-text">{{ $article->body }}</p>
                                         <a class="card-link btn btn-sm btn-outline-success"
-                                            href="{{ route('article.detail', $article->id) }}">
+                                            href="{{ route('article.show', $article->id) }}">
                                             View Detail <i class="fa fa-info"></i>
                                         </a>
 

@@ -8,15 +8,15 @@ use App\Http\Controllers\UserController;
 
 // article routes
 Route::controller(ArticleController::class)->group(function () {
-    Route::get('/', 'index')->name('index');
-    Route::get('/articles/{article}', 'show')->name('article.show');
-
     Route::group(['middleware' => 'auth'], function () {
+        Route::get('/articles/create', 'create')->name('article.create');
         Route::get('/articles/delete/{article}', 'delete')->name('article.delete');
-        Route::get('/articles/add', 'create')->name('article.create');
-        Route::post('/articles/add', 'store')->name('article.store');
+        Route::post('/articles', 'store')->name('article.store');
         Route::post('/articles/edit/{article}', 'update')->name('article.update');
     });
+
+    Route::get('/', 'index')->name('index');
+    Route::get('/articles/{article}', 'show')->name('article.show');
 });
 
 // comment routes

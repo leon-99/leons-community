@@ -59,15 +59,6 @@ class ArticleController extends Controller
         return redirect()->route('index');
     }
 
-    public function edit(Article $article)
-    {
-        $categories = Category::all();
-        return view('articles.article-edit', [
-            "article" => $article,
-            "categories" => $categories
-        ]);
-    }
-
     public function update(Article $article)
     {
         if (Gate::denies('article-update', $article)) {
