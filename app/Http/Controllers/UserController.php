@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UpdatePasswordRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
@@ -55,16 +56,11 @@ class UserController extends Controller
         return redirect('/');
     }
 
-    public function updatePassword(Request $request, User $user)
+    public function updatePassword(UpdatePasswordRequest $request, User $user)
     {
-        $validator = validator(request()->all(), [
-            'old_password' => 'required|string',
-            'password' => 'required|string|confirmed'
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator);
-        };
+        if (Gate::denies('user-update', $user->id)) {
+            return back()->with('user-update-error', "user update failed");
+        }
 
         if (!Hash::check($request['old_password'], $user->password)) {
            return back()->withErrors(['failed' => 'old password does not match']);

@@ -12,7 +12,7 @@ Route::controller(ArticleController::class)->group(function () {
         Route::get('/articles/create', 'create')->name('article.create');
         Route::delete('/articles/delete/{article}', 'delete')->name('article.delete');
         Route::post('/articles/store', 'store')->name('article.store');
-        Route::post('/articles/edit/{article}', 'update')->name('article.update');
+        Route::put('/articles/update/{article}', 'update')->name('article.update');
     });
 
     Route::get('/', 'index')->name('index');

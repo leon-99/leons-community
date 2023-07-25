@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreArticleRequest;
+use App\Http\Requests\UpdateArticleRequest;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
@@ -37,43 +39,36 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(StoreArticleRequest $request)
     {
-        $validator = $request->validate([
-            "title" => "required",
-            "body" => "required",
-            "category_id" => "required",
-            "image" => "mimes:jpeg,png,jpg,gif|max:3072"
-        ]);
-
         $article = new Article;
-        $article->title = request()->title;
-        $article->body = request()->body;
-        $article->category_id = request()->category_id;
+        $article->title = $request->title;
+        $article->body = $request->body;
+        $article->category_id = $request->category_id;
         $article->user_id = auth()->user()->id;
-        if (request()->hasFile('image')) {
-            $article->image = request()->file('image')->store('images', 'public');
+        if ($request->hasFile('image')) {
+            $article->image = $request->file('image')->store('images', 'public');
         }
         $article->save();
 
         return redirect()->route('index');
     }
 
-    public function update(Article $article)
+    public function update(UpdateArticleRequest $request, Article $article)
     {
         if (Gate::denies('article-update', $article)) {
             return back()->with('article-edit-error', "Article delete failed");
         }
 
-        $article->title = request()->title;
-        $article->body = request()->body;
-        $article->category_id = request()->category_id;
-        if (request()->hasFile('image')) {
-            $article->image = request()->file('image')->store('images', 'public');
+        $article->title = $request->title;
+        $article->body = $request->body;
+        $article->category_id = $request->category_id;
+        if ($request->hasFile('image')) {
+            $article->image = $request->file('image')->store('images', 'public');
         }
         $article->save();
 
-        return redirect("/articles/detail/$article->id")->with("article-updated", "article updated");
+        return redirect()->route('article.show', $article->id)->with("article-updated", "article updated");
     }
 
     public function delete(Article $article)
