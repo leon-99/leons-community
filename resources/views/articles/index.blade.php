@@ -21,7 +21,7 @@
                 <div class="card-body">
                     <div class="row d-flex justify-content-start">
                         <div class="col-3 col-sm-2 col-md-2 col-lg-1 text-center pe-0">
-                            <img src="{{ asset('storage/' . $article->user->profile) }}" alt="" class="w-50 rounded-circle">
+                            <img src="{{ asset('storage/' . $article->user->profile) }}" alt="" class="rounded-circle object-fit-cover" style="width: 40px; height: 40px">
                         </div>
                         <div class="col-9 col-sm-10 col-md-10 col-lg-11 ps-0">
                             <a href="{{route('user.show', $article->user)}}" class="text-reset text-decoration-none"><b class="d-block">{{ $article->user->name }}</b></a>
@@ -46,9 +46,9 @@
                             </div>
                         @endif
                     </div>
-                    <span class="text-success d-block mt-4">{{ count($article->comments) }} comments</span>
+                    <span class="text-lime-800 d-block mt-4">{{ count($article->comments) }} comments</span>
 
-                    <a class="card-link text-success" href="{{ route('article.show', $article->id) }}">
+                    <a class="card-link text-slate-950  " href="{{ route('article.show', $article->id) }}">
                         View Detail &raquo;
                     </a>
                 </div>

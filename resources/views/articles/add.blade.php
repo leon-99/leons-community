@@ -42,7 +42,7 @@
                     @endforeach
                 </select>
             </div>
-            <button class="btn btn-primary">Add Article</button>
+            <button class="btn btn-sm bg-lime-950 hover-bg-lime-800">Add Article</button>
         </form>
     </div>
 @endsection

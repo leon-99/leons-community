@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
-use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Support\Facades\Gate;
@@ -77,9 +76,9 @@ class ArticleController extends Controller
             return back()->with('article-delete-error', "Article delete failed");
         }
 
-
         // Storage::delete($article->image);
         // Storage::disk('local')->delete($article->image);
+
         $article->delete();
         if (request()->has('from-profile') == "profile") {
             return redirect("/home")->with("article-delete-success", "An article deleted");

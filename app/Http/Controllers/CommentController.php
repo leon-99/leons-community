@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,7 +13,7 @@ class CommentController extends Controller
     {
         $this->middleware('auth');
     }
-    public function store(Request $request)
+    public function store(CommentRequest $request)
     {
         $comment = new Comment;
         $comment->content = $request->content;
@@ -24,13 +24,13 @@ class CommentController extends Controller
         return back();
     }
 
-    public function update(Comment $comment)
+    public function update(CommentRequest $request, Comment $comment)
     {
         if (Gate::denies('comment-update', $comment)) {
             return back()->with('comment-update-error', 'Unauthorize');
         }
 
-        $comment->content = request()->content;
+        $comment->content = $request->content;
         $comment->edited = '1';
         $comment->save();
         return redirect()->route('article.detail', $comment->article->id)->with('comment-update-success', 'comment-updated');

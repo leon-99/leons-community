@@ -2,8 +2,16 @@
 
 @section('content')
     <div class="container">
+
         <div class="row justify-content-center">
             <div class="col-md-10">
+                @if ($errors->any())
+                    <div class="alert alert-warning">
+                        @foreach ($errors->all() as $error)
+                            {{ $error }}
+                        @endforeach
+                    </div>
+                @endif
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}
@@ -41,7 +49,7 @@
                     </div>
                     <div class="row text-center mb-3">
                         <div class="col-12">
-                            <button type="submit" class="profile-settings btn btn-outline-dark btn-sm">Save
+                            <button type="submit" class="profile-settings btn btn-sm bg-slate-950 hover-bg-slate-800">Save
                                 <i class="fa fa-floppy-o"></i>
                             </button>
                         </div>
@@ -91,7 +99,7 @@
                             @enderror
                         </div>
                         <div class="col-12 mt-3">
-                            <button type="submit" class="profile-settings btn btn-outline-dark btn-sm">Update Password
+                            <button type="submit" class="profile-settings btn btn-sm bg-slate-950 hover-bg-slate-800">Update Password
                                 <i class="fa fa-cog"></i>
                             </button>
                         </div>
@@ -104,7 +112,7 @@
                 <div class="card border-danger shadow">
                     <div class="card-body text-center d-flex justify-content-between">
                         <div class="col-6 me-1">
-                            <a href="" class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                            <a href="" class="btn btn-sm bg-rose-950 hover-bg-rose-800" data-bs-toggle="modal"
                                 data-bs-target="#deleteConfirm">Delete Account</a>
                         </div>
                     </div>
@@ -129,9 +137,9 @@
                     <form action="{{ route('user.destroy', $user) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button href="" type="submit" class="btn btn-danger">Confirm</button>
+                        <button href="" type="submit" class="btn btn-sm bg-rose-950 hover-bg-rose-800">Confirm</button>
                     </form>
-                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-sm bg-slate-950 hover-bg-slate-800" data-bs-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>

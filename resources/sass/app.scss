@@ -10,3 +10,43 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.bg-slate-950 {
+    background: rgb(2 6 23);
+    color: white;
+}
+
+.hover-bg-slate-800:hover {
+    background-color: rgb(30 41 59);
+    color: white;
+}
+
+.bg-rose-950 {
+    background: rgb(76 5 25);
+    color: white;
+}
+
+.hover-bg-rose-800:hover {
+    background-color: rgb(159 18 57);
+    color: white;
+}
+
+.bg-lime-950 {
+    background: rgb(26 46 5);
+    color: white;
+}
+
+.hover-bg-lime-800:hover {
+    background-color: rgb(63 98 18);
+    color: white;
+}
+
+.text-slate-950 {
+    color: rgb(2 6 23);
+}
+
+.text-lime-800 {
+    color: rgb(63 98 18);
+}
+
+

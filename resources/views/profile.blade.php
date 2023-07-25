@@ -22,7 +22,7 @@
                     <div class="card-body">
                         <div class="d-flex text-center border-bottom mb-5">
                             <div class="col-6"><img src="{{ asset('storage/' . $user->profile) }}" alt=""
-                                    class="w-50 rounded-circle">
+                                    class="rounded-circle object-fit-cover" style="width: 70px; height: 70px">
                             </div>
                             <div class="col-6">
                                 <h5 class="mt-3">{{ $user->name }}</h5>
@@ -30,10 +30,10 @@
                             </div>
                         </div>
                        <div class="">
-                        <a href="{{ route('user.edit', $user) }}" class="btn btn-outline-success w-100 my-1">Settings</a>
+                        <a href="{{ route('user.edit', $user) }}" class="btn btn-sm bg-lime-950 hover-bg-lime-800 w-100 my-1">Settings</a>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <input type="submit" class="btn btn-outline-danger w-100 my-1" value="Logout">
+                            <input type="submit" class="btn btn-sm bg-rose-950 hover-bg-rose-800 w-100 my-1" value="Logout">
                         </form>
 
                        </div>
@@ -59,7 +59,7 @@
                                                 <b class="text-success">{{count($article->comments)}} comments</b>
                                             </div>
                                             <p class="card-text">{{ substr($article->body, 0, 200) . ' . . .' }}</p>
-                                            <a class="card-link btn btn-sm btn-outline-success"
+                                            <a class="card-link btn btn-sm bg-slate-950 hover-bg-slate-800"
                                                 href="{{ route('article.show', $article->id) }}">
                                                 View Detail <i class="fa fa-info"></i>
                                             </a>
@@ -68,7 +68,7 @@
                                                 @csrf
                                                 @method('DELETE')
                                                 <input type="hidden" name="from-profile">
-                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                <button type="submit" class="btn btn-sm bg-rose-950 hover-bg-rose-800">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </form>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatePasswordRequest;
+use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
@@ -32,9 +33,8 @@ class UserController extends Controller
         ]);
     }
 
-    public function update(Request $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
-
         if (Gate::denies('user-update', $user->id)) {
             return back()->with('user-update-error', "user update failed");
         }
@@ -46,6 +46,7 @@ class UserController extends Controller
         $user->save();
         return redirect()->route('home');
     }
+
     public function destroy(User $user)
     {
         if (Gate::denies('user-update', $user->id)) {

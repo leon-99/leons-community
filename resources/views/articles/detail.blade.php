@@ -50,7 +50,7 @@
                     <div class="row d-flex justify-content-start">
                         <div class="col-3 col-sm-2 col-md-2 col-lg-1 text-center px-0">
                             <img src="{{ asset('storage/' . $article->user->profile) }}" alt=""
-                                class="rounded-circle w-50 profile-image">
+                                class="rounded-circle object-fit-cover" style="width: 40px; height: 40px">
                         </div>
                         <div class="col-9 col-sm-10 col-md-10 col-lg-11 ps-0">
                             <a href="{{ route('user.show', $article->user) }}" class="text-reset text-decoration-none"><b
@@ -78,7 +78,7 @@
                     </div>
                     <div class="my-4 d-flex">
                         @can('article-update', $article)
-                            <a class="btn btn-sm btn-success mx-2" data-bs-toggle="modal" data-bs-target="#articleEdit">
+                            <a class="btn btn-sm bg-slate-950 hover-bg-slate-800 mx-2" data-bs-toggle="modal" data-bs-target="#articleEdit">
                                 <i class="fa fa-pencil-square"></i>
                             </a>
                         @endcan
@@ -86,7 +86,7 @@
                             <form action="{{ route('article.delete', $article->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-sm btn-danger">
+                                <button type="submit" class="btn btn-sm bg-rose-950 hover-bg-rose-800">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </form>
@@ -107,7 +107,7 @@
                             @csrf
                             <input type="hidden" name="article_id" value="{{ $article->id }}">
                             <textarea name="content" class="form-control mb-2" placeholder="New Comment"></textarea>
-                            <input type="submit" value="Add Comment" class="btn btn-success">
+                            <input type="submit" value="Add Comment" class="btn btn-sm bg-lime-950 hover-bg-lime-800">
                         </form>
                     @endauth
                     <ul class="list-group mt-3 shadow border-0">
@@ -120,7 +120,7 @@
                                     <div
                                         class="col-3 col-sm-2 col-md-2 col-lg-1 text-center pe-0 d-flex justify-content-center align-items-start mt-2">
                                         <img src="{{ asset('storage/' . $comment->user->profile) }}" alt=""
-                                            class="rounded-circle" style="width: 40%;">
+                                            class="rounded-circle object-fit-cover" style="width: 30px; height: 30px">
                                     </div>
                                     <div class="col-9 col-sm-10 col-md-10 col-lg-11 ps-0">
 
@@ -138,12 +138,12 @@
                                     <form action="{{ route('comments.destroy', $comment->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger float-end mx-2"><i
+                                        <button type="submit" class="btn btn-sm bg-rose-950 hover-bg-rose-800 float-end mx-2"><i
                                                 class="fa fa-trash"></i></button>
                                     </form>
                                 @endcan
                                 @can('comment-update', $comment)
-                                    <a class="btn btn-sm btn-success float-end" data-bs-toggle="modal"
+                                    <a class="btn btn-sm bg-slate-950 hover-bg-slate-800 float-end" data-bs-toggle="modal"
                                         data-bs-target="#commentEdit{{ $comment->id }}">
                                         <i class="fa fa-pencil-square"></i>
                                     </a>
@@ -168,7 +168,7 @@
                                                         <input type="hidden" name="user_id" value="{{ $comment->user_id }}">
                                                         <textarea name="content" class="form-control mb-2">{{ $comment->content }}</textarea>
                                                         <input type="submit" value="Update Comment"
-                                                            class="btn btn-secondary">
+                                                            class="btn btn-sm bg-lime-950 hover-bg-lime-800">
                                                     </form>
                                                 </div>
                                             </div>
@@ -220,8 +220,8 @@
                             </select>
                         </div>
                         <div class="mt-3">
-                            <input type="submit" value="Update Post" class="btn btn-success">
-                            <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancel</button>
+                            <input type="submit" value="Update Post" class="btn btn-sm bg-lime-950 hover-bg-lime-800">
+                            <button type="button" class="btn btn-sm bg-slate-950 hover-bg-slate-800" data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
