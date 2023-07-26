@@ -15,11 +15,11 @@ class CommentController extends Controller
     }
     public function store(CommentRequest $request)
     {
-        $comment = new Comment;
-        $comment->content = $request->content;
-        $comment->article_id = $request->article_id;
-        $comment->user_id = auth()->user()->id;
-        $comment->save();
+        Comment::create([
+            'content' => $request->content,
+            'article_id' => $request->article_id,
+            'user_id' => auth()->user()->id
+        ]);
 
         return back();
     }
@@ -30,10 +30,11 @@ class CommentController extends Controller
             return back()->with('comment-update-error', 'Unauthorize');
         }
 
-        $comment->content = $request->content;
-        $comment->edited = '1';
-        $comment->save();
-        return redirect()->route('article.detail', $comment->article->id)->with('comment-update-success', 'comment-updated');
+        $comment->update([
+            'content' => $request->content,
+            'edited' => 1
+        ]);
+        return redirect()->route('article.show', $comment->article->id)->with('comment-update-success', 'comment-updated');
     }
 
     public function destroy(Comment $comment)

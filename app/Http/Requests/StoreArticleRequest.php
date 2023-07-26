@@ -27,6 +27,7 @@ class StoreArticleRequest extends FormRequest
             "title" => "required",
             "body" => "required",
             "category_id" => "required",
+            "user_id" => "sometimes",
             "image" => "mimes:jpeg,png,jpg,gif|max:3072"
         ];
     }

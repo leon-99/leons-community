@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UserUpdateRequest;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -41,7 +40,7 @@ class UserController extends Controller
 
         $user->name = $request->name;
         if ($request->hasFile('profile')) {
-            $user->profile = request()->file('profile')->store('profile-pictures', 'public');
+            $user->profile = $request->file('profile')->store('profile-pictures', 'public');
         }
         $user->save();
         return redirect()->route('home');
@@ -63,12 +62,11 @@ class UserController extends Controller
             return back()->with('user-update-error', "user update failed");
         }
 
-        if (!Hash::check($request['old_password'], $user->password)) {
+        if (!Hash::check($request->old_password, $user->password)) {
            return back()->withErrors(['failed' => 'old password does not match']);
         };
 
-        $user->password = bcrypt($request->password);
-        $user->save();
+        $user->update(['password' =>  bcrypt($request->password)]);
 
         return back()->with('password-changed', 'password-changed');
     }
