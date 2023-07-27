@@ -1,4 +1,7 @@
 @extends('layouts.app')
+@section('title')
+    <title>Blog | Profile</title>
+@endsection
 
 @section('content')
     <div class="container">

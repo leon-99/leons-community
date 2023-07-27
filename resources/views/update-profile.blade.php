@@ -1,17 +1,14 @@
 @extends('layouts.app')
 
+@section('title')
+    <title>Blog | Settings</title>
+@endsection
+
 @section('content')
     <div class="container">
 
         <div class="row justify-content-center">
             <div class="col-md-10">
-                @if ($errors->any())
-                    <div class="alert alert-warning">
-                        @foreach ($errors->all() as $error)
-                            {{ $error }}
-                        @endforeach
-                    </div>
-                @endif
                 @if (session('status'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}
@@ -35,15 +32,20 @@
                     <div class="card-body text-center d-flex justify-content-between">
 
                         <div class="col-6 me-1">
-                            {{-- <img src="{{ asset('storage/' . $user->profile) }}" alt=""
-                                class="w-25"> --}}
+
                             <label>Profile Picture</label>
-                            <input type="file" class="form-control mt-2" name="profile">
+                            <input type="file" class="form-control mt-2 @error('profile') is-invalid @enderror" name="profile">
+                            @error('profile')
+                                    <small class="text-danger">{{$message}}</small>
+                                @enderror
                         </div>
                         <div class="col-6 ">
                             <div class="my-2">
                                 <label>Name</label>
-                                <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $user->name }}">
+                                @error('name')
+                                    <small class="text-danger">{{$message}}</small>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -73,29 +75,26 @@
                         <div class="col-6 me-1">
 
                             <label>Old password</label>
-                            <input type="password" class="form-control mt-2" name="old_password">
+                            <input type="password" class="form-control mt-2 @error('failed') is-invalid @enderror" name="old_password">
                             @error('failed')
-                                <small class="text-danger">old password does't match</small>
-                            @enderror
-                            @error('password')
-                                <small class="text-danger">old password does't match</small>
+                                <small class="text-danger">{{$message}}</small>
                             @enderror
                         </div>
                         <div class="row">
                             <div class="col-6 ">
                                 <div class="my-2">
                                     <label>New password</label>
-                                    <input type="password" class="form-control" name="password">
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password">
                                 </div>
                             </div>
                             <div class="col-6 ">
                                 <div class="my-2">
                                     <label>Confirm password</label>
-                                    <input type="password" class="form-control" name="password_confirmation">
+                                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password_confirmation">
                                 </div>
                             </div>
                             @error('password')
-                                <small class="text-danger">password comfirmation does not match.</small>
+                                <small class="text-danger">{{$message}}</small>
                             @enderror
                         </div>
                         <div class="col-12 mt-3">

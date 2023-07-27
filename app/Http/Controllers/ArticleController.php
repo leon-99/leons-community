@@ -46,7 +46,12 @@ class ArticleController extends Controller
         $article->category_id = $request->category_id;
         $article->user_id = auth()->user()->id;
         if ($request->hasFile('image')) {
-            $article->image = $request->file('image')->store('images', 'public');
+
+            // to solve image conflict
+            $imageName = 'article-images/'.auth()->user()->id.'/'.time().'.'.$request->image->extension();
+
+            $request->image->storeAs('public', $imageName);
+            $article->image = $imageName;
         }
         $article->save();
 

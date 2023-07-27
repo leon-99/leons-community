@@ -40,7 +40,11 @@ class UserController extends Controller
 
         $user->name = $request->name;
         if ($request->hasFile('profile')) {
-            $user->profile = $request->file('profile')->store('profile-pictures', 'public');
+            // to solve image conflict
+            $imageName = 'profile-pictures/'.auth()->user()->id.'/'.time().'.'.$request->profile->extension();
+
+            $request->profile->storeAs('public', $imageName);
+            $user->profile = $imageName;
         }
         $user->save();
         return redirect()->route('home');

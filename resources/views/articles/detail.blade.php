@@ -1,4 +1,10 @@
 @extends('layouts.app')
+
+@section('title')
+    <title>blog | {{ substr($article->title, 0, 20) }}</title>
+@endsection
+
+
 @section('content')
     <div class="container">
         @if (session('comment-update-success'))
