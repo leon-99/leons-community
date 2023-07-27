@@ -48,7 +48,7 @@ class ArticleController extends Controller
         if ($request->hasFile('image')) {
 
             // to solve image conflict
-            $imageName = 'article-images/'.auth()->user()->id.'/'.time().'.'.$request->image->extension();
+            $imageName = 'article-images/' . auth()->user()->id . '/' . time() . '.' . $request->image->extension();
 
             $request->image->storeAs('public', $imageName);
             $article->image = $imageName;
@@ -68,7 +68,14 @@ class ArticleController extends Controller
         $article->body = $request->body;
         $article->category_id = $request->category_id;
         if ($request->hasFile('image')) {
-            $article->image = $request->file('image')->store('images', 'public');
+             // delete the old image
+             $oldImage = 'public/' . $article->image;
+             Storage::delete($oldImage);
+
+             // update the article
+            $imageName = 'article-images/' . auth()->user()->id . '/' . time() . '.' . $request->image->extension();
+            $request->image->storeAs('public', $imageName);
+            $article->image = $imageName;
         }
         $article->save();
 
@@ -80,15 +87,18 @@ class ArticleController extends Controller
         if (Gate::denies('article-delete', $article)) {
             return back()->with('article-delete-error', "Article delete failed");
         }
+        // delete the article image
+        $image = 'public/' . $article->image;
+        Storage::delete($image);
 
-        // Storage::delete($article->image);
-        // Storage::disk('local')->delete($article->image);
-
+        // delete the article from database
         $article->delete();
+
+        // redirect
         if (request()->has('from-profile') == "profile") {
             return redirect("/home")->with("article-delete-success", "An article deleted");
-        } else {
-            return redirect("/")->with("article-delete-success", "An article deleted");
         }
+
+        return redirect("/")->with("article-delete-success", "An article deleted");
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UserUpdateRequest;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 
 
@@ -40,6 +41,12 @@ class UserController extends Controller
 
         $user->name = $request->name;
         if ($request->hasFile('profile')) {
+            // delete the old profile
+            $oldProfile = $user->profile;
+            if ($oldProfile != 'profile-pictures/default-profile.png') {
+                Storage::delete('public/' . $oldProfile);
+            }
+
             // to solve image conflict
             $imageName = 'profile-pictures/'.auth()->user()->id.'/'.time().'.'.$request->profile->extension();
 
@@ -55,8 +62,24 @@ class UserController extends Controller
         if (Gate::denies('user-update', $user->id)) {
             return back()->with('user-delete-error', "account delete failed");
         }
+
+        // delete the old profile
+        $oldProfile = $user->profile;
+        if ($oldProfile != 'profile-pictures/default-profile.png') {
+            // Storage::delete('public/' . $oldProfile);
+            Storage::deleteDirectory('public/profile-pictures/'.auth()->user()->id);
+        }
+
+        Storage::deleteDirectory('public/article-images/'.auth()->user()->id);
+
+        // logout the user
         auth()->logout();
+
+
+
+        // delete the user
         $user->delete();
+
         return redirect('/');
     }
 
