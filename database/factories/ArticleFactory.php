@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Nette\Utils\Random;
 
 class ArticleFactory extends Factory
 {
@@ -14,8 +15,8 @@ class ArticleFactory extends Factory
     public function definition()
     {
         return [
-            'title' => $this->faker->sentence,
-            'body' => $this->faker->paragraph,
+            'title' => $this->faker->realText(rand(10, 30)),
+            'body' => $this->faker->realText(rand(100, 300)),
             'category_id' => rand(1, 5),
             "user_id" => rand(1, 10)
         ];

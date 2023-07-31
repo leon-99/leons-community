@@ -7,16 +7,16 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 
 // article routes
-Route::controller(ArticleController::class)->group(function () {
+Route::group(['controller' => ArticleController::class, 'prefix' => 'articles'],function () {
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/articles/create', 'create')->name('article.create');
-        Route::delete('/articles/delete/{article}', 'delete')->name('article.delete');
-        Route::post('/articles/store', 'store')->name('article.store');
-        Route::put('/articles/update/{article}', 'update')->name('article.update');
+        Route::get('/create', 'create')->name('article.create');
+        Route::delete('/delete/{article}', 'delete')->name('article.delete');
+        Route::post('/store', 'store')->name('article.store');
+        Route::put('/update/{article}', 'update')->name('article.update');
     });
 
     Route::get('/', 'index')->name('index');
-    Route::get('/articles/{article}', 'show')->name('article.show');
+    Route::get('/{article}', 'show')->name('article.show');
 });
 
 // comment routes
