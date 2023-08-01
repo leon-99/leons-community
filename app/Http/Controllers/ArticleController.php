@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -19,6 +21,7 @@ class ArticleController extends Controller
             "articles" => $articles
         ]);
     }
+
 
     public function show(Article $article)
     {
@@ -38,6 +41,7 @@ class ArticleController extends Controller
         ]);
     }
 
+
     public function store(StoreArticleRequest $request)
     {
         $article = new Article;
@@ -47,7 +51,6 @@ class ArticleController extends Controller
         $article->user_id = auth()->user()->id;
         if ($request->hasFile('image')) {
 
-            // to solve image conflict
             $imageName = 'article-images/' . auth()->user()->id . '/' . time() . '.' . $request->image->extension();
 
             $request->image->storeAs('public', $imageName);
@@ -58,21 +61,18 @@ class ArticleController extends Controller
         return redirect()->route('index');
     }
 
+
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        // if (Gate::denies('article-update', $article)) {
-        //     return back()->with('article-edit-error', "Article delete failed");
-        // }
-
         $article->title = $request->title;
         $article->body = $request->body;
         $article->category_id = $request->category_id;
         if ($request->hasFile('image')) {
-             // delete the old image
-             $oldImage = 'public/' . $article->image;
-             Storage::delete($oldImage);
+            // delete the old image
+            $oldImage = 'public/' . $article->image;
+            Storage::delete($oldImage);
 
-             // update the article
+            // update the article
             $imageName = 'article-images/' . auth()->user()->id . '/' . time() . '.' . $request->image->extension();
             $request->image->storeAs('public', $imageName);
             $article->image = $imageName;
@@ -81,6 +81,23 @@ class ArticleController extends Controller
 
         return redirect()->route('article.show', $article->id)->with("article-updated", "article updated");
     }
+
+
+    // article search
+    public function search(Request $request)
+    {
+        $validated = $request->validate([
+            'phrase' => 'required|string|max:255'
+        ]);
+
+        // using the local scope in the article model
+        $articles = Article::search($validated['phrase'])->paginate(10);
+
+        return view("articles.index", [
+            "articles" => $articles
+        ]);
+    }
+
 
     public function delete(Article $article)
     {

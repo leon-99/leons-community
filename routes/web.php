@@ -16,7 +16,7 @@ Route::group(['controller' => ArticleController::class, 'prefix' => 'articles'],
         Route::post('/store', 'store')->name('article.store');
         Route::put('/update/{article}', 'update')->name('article.update');
     });
-
+    Route::post('/search', 'search')->name('article.search');
     Route::get('/{article}', 'show')->name('article.show');
 });
 

@@ -4,8 +4,18 @@
 @endsection
 @section('content')
     <div class="container">
-
-
+        <form class="my-3" action="{{ route('article.search') }}" method="POST">
+            @csrf
+            <div class="row">
+              <div class="col">
+                <input type="text" name="phrase" class="form-control form-control-sm" placeholder="Search">
+              </div>
+              <div class="col">
+                <input type="submit" class="btn btn-sm bg-slate-950 hover-bg-slate-800" value="Search">
+              </div>
+            </div>
+          </form>
+          <hr>
         @if (session('info'))
             <div class="alert alert-info">
                 {{ session('info') }}
