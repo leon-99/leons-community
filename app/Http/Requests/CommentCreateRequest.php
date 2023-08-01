@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Gate;
-class UserUpdateRequest extends FormRequest
+
+class CommentCreateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +13,7 @@ class UserUpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('user-update', $this->user->id);
+        return true;
     }
 
     /**
@@ -24,8 +24,8 @@ class UserUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            "name" => 'required',
-            "profile" => "mimes:jpeg,png,jpg,gif|max:3072"
+            'content' => 'required',
+            'article_id' => 'required'
         ];
     }
 }

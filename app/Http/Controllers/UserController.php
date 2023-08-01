@@ -35,10 +35,6 @@ class UserController extends Controller
 
     public function update(UserUpdateRequest $request, User $user)
     {
-        if (Gate::denies('user-update', $user->id)) {
-            return back()->with('user-update-error', "user update failed");
-        }
-
         $user->name = $request->name;
         if ($request->hasFile('profile')) {
             // delete the old profile
@@ -66,7 +62,6 @@ class UserController extends Controller
         // delete the old profile
         $oldProfile = $user->profile;
         if ($oldProfile != 'profile-pictures/default-profile.png') {
-            // Storage::delete('public/' . $oldProfile);
             Storage::deleteDirectory('public/profile-pictures/'.auth()->user()->id);
         }
 
@@ -85,10 +80,6 @@ class UserController extends Controller
 
     public function updatePassword(UpdatePasswordRequest $request, User $user)
     {
-        if (Gate::denies('user-update', $user->id)) {
-            return back()->with('user-update-error', "user update failed");
-        }
-
         if (!Hash::check($request->old_password, $user->password)) {
            return back()->withErrors(['failed' => 'old password does not match']);
         };

@@ -60,9 +60,9 @@ class ArticleController extends Controller
 
     public function update(UpdateArticleRequest $request, Article $article)
     {
-        if (Gate::denies('article-update', $article)) {
-            return back()->with('article-edit-error', "Article delete failed");
-        }
+        // if (Gate::denies('article-update', $article)) {
+        //     return back()->with('article-edit-error', "Article delete failed");
+        // }
 
         $article->title = $request->title;
         $article->body = $request->body;

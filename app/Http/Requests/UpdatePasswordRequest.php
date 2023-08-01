@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Gate;
 
 class UpdatePasswordRequest extends FormRequest
 {
@@ -14,7 +15,7 @@ class UpdatePasswordRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('user-update', $this->user->id);
     }
 
     /**
@@ -29,7 +30,7 @@ class UpdatePasswordRequest extends FormRequest
             'password' => ['required',
             'string',
             'confirmed',
-            Password::min(8)
+            Password::min(8)->letters()->numbers()->symbols()
             ]
         ];
     }

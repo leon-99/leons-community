@@ -17,15 +17,15 @@ use App\Http\Controllers\API\UserController;
 */
 
 
-Route::controller(ArticleController::class)->group(function () {
-    Route::get('/articles', 'index');
-    Route::get('/articles/{article}', 'show');
-    Route::get('/articles/search/{title}', 'search');
+Route::group(['controller' => ArticleController::class, 'prefix' => 'articles'], function () {
+    Route::get('/', 'index');
+    Route::get('/{article}', 'show');
+    Route::get('/search/{title}', 'search');
 
     Route::group(['middleware' => 'auth:sanctum'], function () {
-        Route::post('/articles', 'store');
-        Route::put('/articles/{article}', 'update');
-        Route::delete('/articles/{article}', 'destroy');
+        Route::post('/', 'store');
+        Route::put('/{article}', 'update');
+        Route::delete('/{article}', 'destroy');
     });
 });
 

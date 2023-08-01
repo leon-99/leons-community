@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\CommentRequest;
+use App\Http\Requests\CommentCreateRequest;
+use App\Http\Requests\CommentUpdateRequest;
 use App\Models\Comment;
 use Illuminate\Support\Facades\Gate;
 
@@ -13,7 +14,7 @@ class CommentController extends Controller
     {
         $this->middleware('auth');
     }
-    public function store(CommentRequest $request)
+    public function store(CommentCreateRequest $request)
     {
         Comment::create([
             'content' => $request->content,
@@ -24,12 +25,8 @@ class CommentController extends Controller
         return back();
     }
 
-    public function update(CommentRequest $request, Comment $comment)
+    public function update(CommentUpdateRequest $request, Comment $comment)
     {
-        if (Gate::denies('comment-update', $comment)) {
-            return back()->with('comment-update-error', 'Unauthorize');
-        }
-
         $comment->update([
             'content' => $request->content,
             'edited' => 1
