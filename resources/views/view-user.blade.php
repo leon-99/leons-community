@@ -20,7 +20,7 @@
 
                     <div class="card-body text-center d-flex">
                         <div class="col-6"><img src="{{ asset('storage/' . $user->profile) }}" alt=""
-                                class="w-25 rounded-circle">
+                                class="rounded-circle object-fit-cover" style="width: 70px; height: 70px">
                         </div>
                         <div class="col-6">
                             <h5 class="mt-3">{{ $user->name }}</h5>

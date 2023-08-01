@@ -9,19 +9,31 @@ use App\Http\Controllers\UserController;
 // article routes
 Route::get('/', [ArticleController::class, 'index'])->name('index');
 
-Route::group(['controller' => ArticleController::class, 'prefix' => 'articles'], function () {
+
+/*
+---------------------------------
+   Article Routes
+---------------------------------
+    Using route groups, you can pass in an array of options as the first parmeter.
+    Options using in this group:
+        controller: pre-declare the controller all routes in this group gonna go, so you only have to write the method name.
+        prefix: since all the routes in this group are gonna start with the url 'article', we pre-delcare it as well.
+        as: same as the piefic above but for the route names, all the route names in this group are gonna start with 'article.'
+*/
+
+Route::group(['controller' => ArticleController::class, 'prefix' => 'articles', 'as' => 'article.'], function () {
     Route::group(['middleware' => 'auth'], function () {
-        Route::get('/create', 'create')->name('article.create');
-        Route::delete('/delete/{article}', 'delete')->name('article.delete');
-        Route::post('/store', 'store')->name('article.store');
-        Route::put('/update/{article}', 'update')->name('article.update');
+        Route::get('/create', 'create')->name('create');
+        Route::delete('/delete/{article}', 'delete')->name('delete');
+        Route::post('/store', 'store')->name('store');
+        Route::put('/update/{article}', 'update')->name('update');
     });
-    Route::post('/search', 'search')->name('article.search');
-    Route::get('/{article}', 'show')->name('article.show');
+    Route::post('/search', 'search')->name('search');
+    Route::get('/{article}', 'show')->name('show');
 });
 
 // comment routes
-Route::resource('comments', CommentController::class)->only('store', 'update', 'destroy');
+Route::resource('comments', CommentController::class)->only('store', 'update', 'destroy')->middleware('auth');
 
 // user routes
 Route::put('/user/update-password/{user}', [UserController::class, 'updatePassword'])->name('user.password.update');

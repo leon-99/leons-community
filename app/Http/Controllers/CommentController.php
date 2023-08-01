@@ -9,11 +9,6 @@ use Illuminate\Support\Facades\Gate;
 
 class CommentController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     public function store(CommentCreateRequest $request)
     {
         Comment::create([

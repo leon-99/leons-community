@@ -90,7 +90,7 @@ class ArticleController extends Controller
             'phrase' => 'required|string|max:255'
         ]);
 
-        // using the local scope in the article model
+        // using the search local scope in the article model
         $articles = Article::search($validated['phrase'])->paginate(10);
 
         return view("articles.index", [
