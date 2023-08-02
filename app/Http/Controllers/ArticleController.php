@@ -102,7 +102,19 @@ class ArticleController extends Controller
         ]);
     }
 
-    public function filterByCategory(Category $category) {
+    public function recent()
+    {
+       $articles = Article::getTodayArticles()->paginate(10);
+       $categories = Category::all();
+
+        return view("articles.index", [
+            "articles" => $articles,
+            'categories' => $categories
+        ]);
+    }
+
+    public function filterByCategory(Category $category)
+    {
 
         $articles = Article::filterByCategory($category->id)->latest()->paginate(10);
 

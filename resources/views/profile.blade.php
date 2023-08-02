@@ -4,7 +4,7 @@
 @endsection
 
 @section('content')
-    <div class="container">
+    <div class="mx-4">
         @if (session('article-delete-success'))
             <div class="alert alert-success">
                 An article deleted.

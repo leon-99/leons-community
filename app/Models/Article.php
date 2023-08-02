@@ -29,6 +29,11 @@ class Article extends Model
         $query->where('category_id', '=', $id);
     }
 
+    public function scopeGetTodayArticles(Builder $query) : void
+    {
+        $query->where('created_at', '>', now()->subDay());
+    }
+
     public function category()
     {
         return $this->belongsTo('App\Models\Category');

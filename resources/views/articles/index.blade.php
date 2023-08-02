@@ -3,7 +3,7 @@
     <title>Blog | Home</title>
 @endsection
 @section('content')
-    <div class="container">
+    <div class="mx-4">
         @if (session('info'))
             <div class="alert alert-info">
                 {{ session('info') }}
@@ -16,7 +16,7 @@
             </div>
         @endif
 
-
+            {{-- show only on mobile devices --}}
         <div class="row d-md-none d-lg-none">
             <form class="pb-3 bt-2" action="{{ route('article.search') }}" method="POST">
                 @csrf
@@ -31,7 +31,56 @@
             </form>
             <hr>
         </div>
+
+
         <div class="row">
+            <div class="col-md-3 d-none d-md-block d-lg-block card shadow border-0 h-25">
+                <div class="d-flex text-center py-3">
+                    <div class="col-6">
+                        @if (auth()->user())
+                        <img src="{{ asset('storage/' . auth()->user()->profile) }}" alt=""
+                        class="rounded-circle object-fit-cover" style="width: 70px; height: 70px">
+                        @else
+                        <img src="{{ asset('storage/profile-pictures/default-profile.png') }}" alt=""
+                        class="rounded-circle object-fit-cover" style="width: 70px; height: 70px">
+                        @endif
+
+                    </div>
+                    <div class="col-6">
+                        @if (auth()->user())
+                            <a class="mt-4 h5 text-decoration-none d-block" href="{{ route('user.show', auth()->user()) }}">{{ auth()->user()->name }}</a>
+                        @else
+                            <h5 class="mt-4">You are not logged in.</h5>
+                        @endif
+                    </div>
+                </div>
+
+                <hr class="my-0">
+
+                <form class="my-3 bt-2" action="{{ route('article.search') }}" method="POST">
+                    @csrf
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" name="phrase" class="form-control form-control-sm" placeholder="Search">
+                        </div>
+                        <div class="col">
+                            <input type="submit" class="btn btn-sm bg-slate-950 hover-bg-slate-800" value="Search">
+                        </div>
+                    </div>
+                </form>
+                <hr class="my-0">
+                <div class="badges my-3">
+                    @foreach ($categories as $category)
+                        <a href="{{ route('article.filter', $category) }}"
+                            class="badge text-white bg-slate-950 hover-bg-slate-800 text-decoration-none">{{ $category->name }}</a>
+                    @endforeach
+                    <hr>
+                </div>
+                <div class="links text-center">
+                    <a href="{{ route('article.recent') }}" class="d-block my-2 text-slate-950 hover-text-slate-800">Recent Posts</a>
+                    <hr>
+                </div>
+            </div>
             <div class="col-md-9 col-sm-12">
                 @foreach ($articles as $article)
                     <div class="card mb-2 border-0 shadow">
@@ -79,28 +128,7 @@
                     {{ $articles->links() }}
                 </div>
             </div>
-            <div class="col-md-3 d-none d-md-block d-lg-block card shadow border-0">
 
-                <form class="my-3 bt-2" action="{{ route('article.search') }}" method="POST">
-                    @csrf
-                    <div class="row">
-                        <div class="col">
-                            <input type="text" name="phrase" class="form-control form-control-sm" placeholder="Search">
-                        </div>
-                        <div class="col">
-                            <input type="submit" class="btn btn-sm bg-slate-950 hover-bg-slate-800" value="Search">
-                        </div>
-                    </div>
-                </form>
-                <hr class="my-0">
-                <div class="badges my-3">
-                    @foreach ($categories as $category)
-                        <a href="{{ route('article.filter', $category) }}"
-                            class="badge text-white bg-slate-950 text-decoration-none">{{ $category->name }}</a>
-                    @endforeach
-                    <hr>
-                </div>
-            </div>
         </div>
 
 

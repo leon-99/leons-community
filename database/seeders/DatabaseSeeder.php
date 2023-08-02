@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Article::factory()->count(20)->create();
-        Comment::factory()->count(20)->create();
+        Comment::factory()->count(80)->create();
 
         $list = ["HTML", "CSS", "Laravel", "PHP", "JavaScript"];
 

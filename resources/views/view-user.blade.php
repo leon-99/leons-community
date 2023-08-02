@@ -44,7 +44,7 @@
                                         </div>
                                         <p class="card-text">{{ substr($article->body, 0, 200) . ' . . .' }}</p>
                                         <a class="card-link btn btn-sm btn-outline-success"
-                                            href="{{ url("/articles/detail/$article->id") }}">
+                                            href="{{ route('article.show', $article) }}">
                                             View Detail <i class="fa fa-info"></i>
                                         </a>
 

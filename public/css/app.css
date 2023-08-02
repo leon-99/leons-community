@@ -15033,6 +15033,10 @@ textarea.form-control-lg {
   color: rgb(2, 6, 23);
 }
 
+.hover-text-slate-800:hover {
+  color: rgb(30, 41, 59);
+}
+
 .text-lime-800 {
   color: rgb(63, 98, 18);
 }
