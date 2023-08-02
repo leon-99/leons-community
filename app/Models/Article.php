@@ -33,7 +33,6 @@ class Article extends Model
     {
         $query->where('created_at', '>', now()->subDay());
     }
-
     public function category()
     {
         return $this->belongsTo('App\Models\Category');

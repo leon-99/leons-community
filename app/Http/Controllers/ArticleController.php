@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Comment;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,7 +21,7 @@ class ArticleController extends Controller
 
         return view("articles.index", [
             'articles' => $articles,
-            'categories' => $categories
+            'categories' => $categories,
         ]);
     }
 
@@ -98,7 +100,8 @@ class ArticleController extends Controller
 
         return view("articles.index", [
             "articles" => $articles,
-            'categories' => $categories
+            'categories' => $categories,
+            'title' => "Search result of '".$validated['phrase']."'"
         ]);
     }
 
@@ -108,8 +111,9 @@ class ArticleController extends Controller
        $categories = Category::all();
 
         return view("articles.index", [
-            "articles" => $articles,
-            'categories' => $categories
+            'articles' => $articles,
+            'categories' => $categories,
+            'title' => 'Recent posts'
         ]);
     }
 
@@ -122,7 +126,8 @@ class ArticleController extends Controller
 
         return view("articles.index", [
             "articles" => $articles,
-            'categories' => $categories
+            'categories' => $categories,
+            'title' => "Category of '".$category->name."'"
         ]);
     }
 

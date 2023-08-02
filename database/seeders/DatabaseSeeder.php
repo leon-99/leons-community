@@ -3,10 +3,10 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Article;
-use App\Models\Category;
-use App\Models\Comment;
-use App\Models\User;
+use Database\Seeders\ArticleSeeder;
+use Database\Seeders\CommentSeeder;
+use Database\Seeders\CategorySeeder;
+use Database\Seeders\UserSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,23 +17,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(10)->create();
-        User::factory()->create([
-            "name" => "Leon",
-            "email" => "leonzifer@gmail.com"
+        $this->call([
+            UserSeeder::class,
+            CategorySeeder::class,
+            ArticleSeeder::class,
+            CommentSeeder::class,
         ]);
-        User::factory()->create([
-            "name" => "Hanifah",
-            "email" => "hanifah@gmail.com"
-        ]);
-
-        Article::factory()->count(20)->create();
-        Comment::factory()->count(80)->create();
-
-        $list = ["HTML", "CSS", "Laravel", "PHP", "JavaScript"];
-
-        foreach($list as $name) {
-            Category::create(["name" => $name]);
-        }
     }
 }

@@ -15040,3 +15040,20 @@ textarea.form-control-lg {
 .text-lime-800 {
   color: rgb(63, 98, 18);
 }
+
+@media (min-width: 768px) {
+  .side-bar {
+    position: fixed;
+    width: 25%;
+  }
+}
+@media (min-width: 768px) {
+  .main-bar {
+    width: 73%;
+  }
+}
+@media (max-width: 768px) {
+  .main-bar-mt-20px {
+    margin-top: 20px;
+  }
+}

@@ -10,13 +10,13 @@
                 An article deleted.
             </div>
         @endif
-        <div class="row justify-content-center">
+        <div class="d-md-flex">
             @if (session('status'))
                 <div class="alert alert-success" role="alert">
                     {{ session('status') }}
                 </div>
             @endif
-            <div class="col-md-4">
+            <div class="side-bar">
                 <div class="card border-0 shadow">
                     <div class="card-header d-flex">
                         <div class="mt-1">Profile</div>
@@ -44,7 +44,7 @@
                 </div>
             </div>
 
-            <div class="col-md-8">
+            <div class="ms-auto main-bar main-bar-mt-20px" >
                 <div class="card border-0 shadow">
                     <div class="card-header">{{ __('Your Posts') }}</div>
 
