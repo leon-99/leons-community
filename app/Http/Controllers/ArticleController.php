@@ -9,16 +9,17 @@ use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
     public function index()
     {
         $articles = Article::latest()->paginate(10);
+        $categories = Category::all();
 
         return view("articles.index", [
-            "articles" => $articles
+            'articles' => $articles,
+            'categories' => $categories
         ]);
     }
 
@@ -91,10 +92,25 @@ class ArticleController extends Controller
         ]);
 
         // using the search local scope in the article model
-        $articles = Article::search($validated['phrase'])->paginate(10);
+        $articles = Article::search($validated['phrase'])->latest()->paginate(10);
+
+        $categories = Category::all();
 
         return view("articles.index", [
-            "articles" => $articles
+            "articles" => $articles,
+            'categories' => $categories
+        ]);
+    }
+
+    public function filterByCategory(Category $category) {
+
+        $articles = Article::filterByCategory($category->id)->latest()->paginate(10);
+
+        $categories = Category::all();
+
+        return view("articles.index", [
+            "articles" => $articles,
+            'categories' => $categories
         ]);
     }
 

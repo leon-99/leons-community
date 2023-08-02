@@ -29,6 +29,7 @@ Route::group(['controller' => ArticleController::class, 'prefix' => 'articles', 
         Route::put('/update/{article}', 'update')->name('update');
     });
     Route::post('/search', 'search')->name('search');
+    Route::get('/filter/{category}', 'filterByCategory')->name('filter');
     Route::get('/{article}', 'show')->name('show');
 });
 

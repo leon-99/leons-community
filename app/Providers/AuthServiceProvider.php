@@ -25,8 +25,16 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('comment-delete', function ($user, $comment) {
-            return $user->id == $comment->user_id or $user->id == $comment->article->user_id;
+        Gate::define('user-update', function ($user, $user_id) {
+            return $user->id == $user_id;
+        });
+
+        Gate::define('user-delete', function ($user, $user_id) {
+            return $user->id == $user_id;
+        });
+
+        Gate::define('article-update', function ($user, $article) {
+            return $user->id == $article->user_id;
         });
 
         Gate::define('article-delete', function ($user, $article) {
@@ -37,16 +45,9 @@ class AuthServiceProvider extends ServiceProvider
             return $user->id == $comment->user_id;
         });
 
-        Gate::define('article-update', function ($user, $article) {
-            return $user->id == $article->user_id;
+        Gate::define('comment-delete', function ($user, $comment) {
+            return $user->id == $comment->user_id or $user->id == $comment->article->user_id;
         });
 
-        Gate::define('user-update', function ($user, $user_id) {
-            return $user->id == $user_id;
-        });
-
-        Gate::define('user-delete', function ($user, $user_id) {
-            return $user->id == $user_id;
-        });
     }
 }
