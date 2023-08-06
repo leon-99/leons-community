@@ -48,6 +48,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('comment-delete', function ($user, $comment) {
             return $user->id == $comment->user_id or $user->id == $comment->article->user_id;
         });
-
+        Gate::define('view-dashboard', function ($user) {
+            return $user->is_admin;
+        });
     }
 }

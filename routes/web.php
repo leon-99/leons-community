@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\Admin\AdminController;
 
 // article routes
 Route::get('/', [ArticleController::class, 'index'])->name('index');
@@ -45,3 +46,18 @@ Route::resource('user', UserController::class)->except('index', 'create', 'store
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
+
+// Admin routes
+Route::group([
+    'controller' => AdminController::class,
+    'prefix' => 'admin',
+    'as' => 'admin.',
+    'middleware' => ['admin']
+], function () {
+    Route::get('/panel', 'index')->name('dashboard');
+    Route::get('/view-user/{user}', 'showUser')->name('user.show');
+    Route::get('/view-user/articles/{article}', 'showArticle')->name('article.show');
+    Route::delete('/delete-user/{user}', 'deleteUser')->name('user.destroy');
+    Route::delete('/delete-comment/{comment}', 'deleteComment')->name('comment.destroy');
+    Route::delete('/delete-article/{article}', 'deleteArticle')->name('article.destroy');
+});

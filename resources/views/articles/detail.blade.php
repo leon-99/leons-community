@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('nav-title')
+    <a class="navbar-brand text-white" href="{{ route('index') }}">
+        {{ config('app.name', 'Laravel') }}
+    </a>
+@endsection
+
 @section('title')
     <title>blog | {{ substr($article->title, 0, 20) }}</title>
 @endsection

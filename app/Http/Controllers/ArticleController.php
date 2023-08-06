@@ -101,7 +101,7 @@ class ArticleController extends Controller
         return view("articles.index", [
             "articles" => $articles,
             'categories' => $categories,
-            'title' => "Search result of '".$validated['phrase']."'"
+            'title' => "Search results of '".$validated['phrase']."'"
         ]);
     }
 
@@ -115,6 +115,12 @@ class ArticleController extends Controller
             'categories' => $categories,
             'title' => 'Recent posts'
         ]);
+    }
+
+    public function popular() {
+        $articles = Article::getPopularArticles()->get();
+
+        dd($articles);
     }
 
     public function filterByCategory(Category $category)

@@ -1,4 +1,11 @@
 @extends('layouts.app')
+
+@section('nav-title')
+    <a class="navbar-brand text-white" href="{{ route('index') }}">
+        {{ config('app.name', 'Laravel') }}
+    </a>
+@endsection
+
 @section('title')
     <title>Blog | Profile</title>
 @endsection
@@ -32,34 +39,40 @@
                                 <p>{{ $user->email }}</p>
                             </div>
                         </div>
-                       <div class="">
-                        <a href="{{ route('user.edit', $user) }}" class="btn btn-sm bg-lime-950 hover-bg-lime-800 w-100 my-1">Settings</a>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            <input type="submit" class="btn btn-sm bg-rose-950 hover-bg-rose-800 w-100 my-1" value="Logout">
-                        </form>
+                        <div class="">
+                            <a href="{{ route('user.edit', $user) }}"
+                                class="btn btn-sm bg-lime-950 hover-bg-lime-800 w-100 my-1">Settings</a>
+                            @can('view-dashboard')
+                                <a href="{{ route('admin.dashboard') }}"
+                                    class="btn btn-sm bg-lime-950 hover-bg-lime-800 w-100 my-1">Admin Dashboard</a>
+                            @endcan
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <input type="submit" class="btn btn-sm bg-rose-950 hover-bg-rose-800 w-100 my-1"
+                                    value="Logout">
+                            </form>
 
-                       </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div class="ms-auto main-bar main-bar-mt-20px" >
+            <div class="ms-auto main-bar main-bar-mt-20px">
                 <div class="card border-0 shadow">
                     <div class="card-header">{{ __('Your Posts') }}</div>
 
                     <div class="card-body">
                         @unless ($articles->count() == 0)
-                            @foreach ($articles as $article)
+                            @foreach ($articles->reverse() as $article)
                                 <div class="card mb-2 border-0 shadow">
                                     <div class="card-body d-flex">
                                         <div class="col-6">
                                             <h5 class="card-title">{{ $article->title }}</h5>
                                             <div class="card-subtitle mb-2 text-muted small">
-                                               <span> {{ $article->created_at->diffForHumans() }}</span>
+                                                <span> {{ $article->created_at->diffForHumans() }}</span>
                                                 by <b>{{ $article->user->name }}</b>
                                                 <br>
-                                                <b class="text-success">{{count($article->comments)}} comments</b>
+                                                <b class="text-success">{{ count($article->comments) }} comments</b>
                                             </div>
                                             <p class="card-text">{{ substr($article->body, 0, 200) . ' . . .' }}</p>
                                             <a class="card-link btn btn-sm bg-slate-950 hover-bg-slate-800"
@@ -67,7 +80,8 @@
                                                 View Detail <i class="fa fa-info"></i>
                                             </a>
 
-                                            <form action="{{ route('article.delete', $article->id) }}" method="POST" class="d-inline">
+                                            <form action="{{ route('article.delete', $article->id) }}" method="POST"
+                                                class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <input type="hidden" name="from-profile">
