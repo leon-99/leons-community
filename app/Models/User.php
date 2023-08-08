@@ -46,4 +46,15 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Article');
     }
+
+    /**
+     * Set the user's name.
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucwords($value);
+    }
 }
