@@ -1,6 +1,8 @@
 <?php
 
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\ArticleController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CommentController;
@@ -23,7 +25,7 @@ Route::get('/', [ArticleController::class, 'index'])->name('index');
 */
 
 Route::group(['controller' => ArticleController::class, 'prefix' => 'articles', 'as' => 'article.'], function () {
-    Route::group(['middleware' => 'auth'], function () {
+    Route::group(['middleware' => ['auth', 'verified']], function () {
         Route::get('/create', 'create')->name('create');
         Route::delete('/delete/{article}', 'delete')->name('delete');
         Route::post('/store', 'store')->name('store');
@@ -37,7 +39,9 @@ Route::group(['controller' => ArticleController::class, 'prefix' => 'articles', 
 });
 
 // comment routes
-Route::resource('comments', CommentController::class)->only('store', 'update', 'destroy')->middleware('auth');
+Route::group(['middleware' => ['auth', 'verified']], function() {
+    Route::resource('comments', CommentController::class)->only('store', 'update', 'destroy');
+});
 
 // user routes
 Route::put('/user/update-password/{user}', [UserController::class, 'updatePassword'])->name('user.password.update');
@@ -46,6 +50,8 @@ Route::resource('user', UserController::class)->except('index', 'create', 'store
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Auth::routes();
+
+
 
 // Admin routes
 Route::group([
@@ -61,3 +67,24 @@ Route::group([
     Route::delete('/delete-comment/{comment}', 'deleteComment')->name('comment.destroy');
     Route::delete('/delete-article/{article}', 'deleteArticle')->name('article.destroy');
 });
+
+
+
+
+// Email Verification Routes
+
+Route::get('/email/verify', function () {
+    return view('auth.verify');
+})->middleware('auth')->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/');
+})->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', function (Request $request) {
+    $request->user()->sendEmailVerificationNotification();
+
+    return back()->with('message', 'Verification link sent!');
+})->middleware(['auth', 'throttle:6,1'])->name('verification.send');

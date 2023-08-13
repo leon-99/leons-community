@@ -1,12 +1,22 @@
 @extends('layouts.app')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+@section('nav-title')
+    <a class="navbar-brand text-white" href="{{ route('index') }}">
+        {{ config('app.name', 'Laravel') }}
+    </a>
+@endsection
 
+@section('title')
+    <title>LC | Login</title>
+@endsection
+
+@section('content')
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5">
+            <h3 class="text-center mb-5 text-slate-950">Login to Leon's Comunity</h3>
+            <div class="card py-3 border-0 shadow">
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -53,7 +63,7 @@
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-sm bg-lime-950 hover-bg-lime-800">
+                                <button type="submit" class="btn btn-sm bg-slate-950 hover-bg-slate-800">
                                     {{ __('Login') }}
                                 </button>
 
