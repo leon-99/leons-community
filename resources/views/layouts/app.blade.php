@@ -91,7 +91,7 @@
           <defs>
               <linearGradient id="bg">
                   <stop offset="0%" style="stop-color:rgba(2, 6, 23, 0.06)"></stop>
-                  <stop offset="50%" style="stop-color:rgba(2, 1, 23, 0.6)"></stop>
+                  <stop offset="50%" style="stop-color:rgba(2, 1, 23, 0.9)"></stop>
                   <stop offset="100%" style="stop-color:rgba(2, 0, 23, 0.2)"></stop>
               </linearGradient>
               <path id="wave" fill="url(#bg)" d="M-363.852,502.589c0,0,236.988-41.997,505.475,0

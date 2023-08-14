@@ -29,14 +29,9 @@ class Article extends Model
         $query->where('category_id', '=', $id);
     }
 
-    public function scopeGetTodayArticles(Builder $query) : void
-    {
-        $query->where('created_at', '>', now()->subDay());
-    }
-
     public function scopeGetPopularArticles(Builder $query) : void
     {
-        $query->withCount('comments')->orderByDesc('comments_count');
+        $query->has('comments', '>', 5)->take(5)->withCount('comments')->orderByDesc('comments_count');
     }
 
 

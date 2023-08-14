@@ -83,12 +83,15 @@
                     <hr>
                 </div>
                 <div class="links text-center">
-                    <a href="{{ route('article.recent') }}" class="d-block my-2 text-slate-950 hover-text-slate-800">
-                        Recent Posts</a>
+                    <p><b>Popular Articles</b></p>
+                    <ul class="list-group">
+                        @foreach ($popularArticles as $popArticle)
+                        <li class="list-group-item">
+                            <a href="{{ route('article.show', $popArticle->id) }}" class="text-decoration-none">{{ $popArticle->title }} | <span class="text-success">{{count($popArticle->comments)}} comments</span></a>
 
-                    <a href="{{ route('article.popular') }}" class="d-block my-2 text-slate-950 hover-text-slate-800">
-                        Popular Posts</a>
-                    <hr>
+                        </li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
 

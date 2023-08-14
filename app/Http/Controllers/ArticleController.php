@@ -17,10 +17,12 @@ class ArticleController extends Controller
     {
         $articles = Article::latest()->paginate(10);
         $categories = Category::all();
+        $popularArticles = Article::getPopularArticles()->get();
 
         return view("articles.index", [
             'articles' => $articles,
             'categories' => $categories,
+            'popularArticles' => $popularArticles
         ]);
     }
 
