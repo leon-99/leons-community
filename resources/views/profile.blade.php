@@ -17,17 +17,17 @@
                 An article deleted.
             </div>
         @endif
+        @if (session('status'))
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+        @endif
         @if (auth()->user()->email_verified_at == NULL)
             <div class="alert alert-warning" role="alert">
                 Please verify your email address to make posts and comments.
             </div>
             @endif
         <div class="d-md-flex">
-            @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
-            @endif
             <div class="side-bar">
                 <div class="card border-0 shadow">
                     <div class="card-header d-flex">

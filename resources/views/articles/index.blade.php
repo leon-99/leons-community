@@ -9,19 +9,18 @@
     <title>Blog | Home</title>
 @endsection
 @section('content')
+    @if (session('info'))
+        <div class="alert alert-info">
+            {{ session('info') }}
+        </div>
+    @endif
+
+    @if (session('article-delete-success'))
+        <div class="alert alert-success">
+            An article deleted.
+        </div>
+    @endif
     <div class="mx-4">
-        @if (session('info'))
-            <div class="alert alert-info">
-                {{ session('info') }}
-            </div>
-        @endif
-
-        @if (session('article-delete-success'))
-            <div class="alert alert-success">
-                An article deleted.
-            </div>
-        @endif
-
         {{-- show only on mobile devices --}}
         <div class="row d-md-none d-lg-none">
             <form class="pb-3 bt-2" action="{{ route('article.search') }}" method="POST">
@@ -86,10 +85,12 @@
                     <p><b>Popular Articles</b></p>
                     <ul class="list-group">
                         @foreach ($popularArticles as $popArticle)
-                        <li class="list-group-item">
-                            <a href="{{ route('article.show', $popArticle->id) }}" class="text-decoration-none">{{ $popArticle->title }} | <span class="text-success">{{count($popArticle->comments)}} comments</span></a>
+                            <li class="list-group-item">
+                                <a href="{{ route('article.show', $popArticle->id) }}"
+                                    class="text-decoration-none">{{ $popArticle->title }} | <span
+                                        class="text-success">{{ count($popArticle->comments) }} comments</span></a>
 
-                        </li>
+                            </li>
                         @endforeach
                     </ul>
                 </div>
