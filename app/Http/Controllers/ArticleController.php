@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Article;
+use App\Models\User;
 use App\Models\Category;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
@@ -96,44 +96,35 @@ class ArticleController extends Controller
 
         // using the search local scope in the article model
         $articles = Article::search($validated['phrase'])->latest()->paginate(10);
+        $users = User::search($validated['phrase'])->latest()->get();
+        $popularArticles = Article::getPopularArticles()->get();
+        $count = $articles->count() + $users->count();
 
         $categories = Category::all();
 
         return view("articles.index", [
-            "articles" => $articles,
-            'categories' => $categories,
-            'title' => "Search results of '".$validated['phrase']."'"
-        ]);
-    }
+                    "articles" => $articles,
+                    'count' => $count,
+                    'categories' => $categories,
+                    'popularArticles' => $popularArticles,
+                    'users' => $users,
+                    'title' => "Search results of '".$validated['phrase']."'"
+                ]);
 
-    public function recent()
-    {
-       $articles = Article::getTodayArticles()->paginate(10);
-       $categories = Category::all();
-
-        return view("articles.index", [
-            'articles' => $articles,
-            'categories' => $categories,
-            'title' => 'Recent posts'
-        ]);
-    }
-
-    public function popular() {
-        $articles = Article::getPopularArticles()->get();
-
-        dd($articles);
-    }
-
+            }
     public function filterByCategory(Category $category)
     {
 
         $articles = Article::filterByCategory($category->id)->latest()->paginate(10);
+        $popularArticles = Article::getPopularArticles()->get();
 
         $categories = Category::all();
 
         return view("articles.index", [
             "articles" => $articles,
+            'count' => $articles->count(),
             'categories' => $categories,
+            'popularArticles' => $popularArticles,
             'title' => "Category of '".$category->name."'"
         ]);
     }

@@ -98,7 +98,26 @@
 
             <div class="ms-auto main-bar">
                 @if (isset($title))
-                    <div class="alert alert-light">({{ count($articles) }}) {{ $title }}</div>
+                    <div class="alert alert-light">({{ $count }}) {{ $title }}</div>
+                @endif
+                @if (request()->getRequestUri() === '/articles/search')
+                    <p class="text-center">Users</p>
+                    @foreach ($users as $user)
+                        <div class="card border-0 shadow px-2 py-3 my-2 d-flex flex-row align-items-center">
+                            <div class="col-3 col-sm-2 col-md-2 col-lg-1 text-center pe-0">
+                                <img src="{{ asset('storage/' . $user->profile) }}" alt=""
+                                    class="rounded-circle object-fit-cover" style="width: 40px; height: 40px">
+                            </div>
+                            <div class="col-9 col-sm-10 col-md-10 col-lg-11 ps-0">
+                                <a href="{{ route('user.show', $user) }}" class="text-reset text-decoration-none"><b
+                                        class="d-block">{{ $user->name }}</b></a>
+                            </div>
+                        </div>
+                    @endforeach
+                    <hr>
+                @endif
+                @if ($articles->count() > 0 and request()->getRequestUri() != '/')
+                    <p class="text-center">Articles</p>
                 @endif
                 @foreach ($articles as $article)
                     <div class="card mb-2 border-0 shadow">
