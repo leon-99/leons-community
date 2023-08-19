@@ -1,5 +1,15 @@
 @extends('layouts.app')
 
+@section('nav-title')
+    <a class="navbar-brand text-white" href="{{ route('index') }}">
+        {{ config('app.name', 'Laravel') }}
+    </a>
+@endsection
+
+@section('title')
+    <title>LC | Password Reset</title>
+@endsection
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

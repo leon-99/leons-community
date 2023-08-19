@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 
+use Illuminate\Support\Facades\Log;
+
 
 class UserController extends Controller
 {
@@ -70,7 +72,7 @@ class UserController extends Controller
         // logout the user
         auth()->logout();
 
-
+        Log::stack(['users', 'slack'])->info("User {user} just deleted their account.", ['user' => $user->name]);
 
         // delete the user
         $user->delete();

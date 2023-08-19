@@ -12,7 +12,13 @@
 
 @section('content')
     <div class="container">
-
+      <div class="operations mb-4 d-flex justify-content-around">
+        <a href="/log-viewer" class="btn btn-sm btn-warning">View Logs</a>
+        <button class="btn btn-sm bg-slate-950">Other Operations</button>
+        <button class="btn btn-sm bg-slate-950">Other Operations</button>
+        <button class="btn btn-sm bg-slate-950">Other Operations</button>
+      </div>
+      <hr>
         <h5 class="mb-2">Users</h5>
 
         <table class="table table-striped">
