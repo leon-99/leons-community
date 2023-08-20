@@ -43,11 +43,17 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+
+    // Model relationships
     public function article()
     {
         return $this->hasMany('App\Models\Article');
     }
 
+
+    // Local Scopes
+
+    // search scope
     public function scopeSearch(Builder $query, $phrase): void
     {
         $query->where('name', 'like', '%'.$phrase.'%');
@@ -59,6 +65,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @param  string  $value
      * @return void
      */
+
+     // Accessor in laravel 8
     public function setNameAttribute($value)
     {
         $this->attributes['name'] = ucwords($value);

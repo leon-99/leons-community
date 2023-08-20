@@ -17,6 +17,9 @@ class Article extends Model
         "user_id"
     ];
 
+
+    // Scopes
+
     // search article local scope
     public function scopeSearch(Builder $query, $phrase): void
     {
@@ -24,16 +27,21 @@ class Article extends Model
         ->orWhere('body', 'like', '%'.$phrase.'%');
     }
 
+    // filter by category local scope
     public function scopeFilterByCategory(Builder $query, $id) : void
     {
         $query->where('category_id', '=', $id);
     }
 
+
+    // popular articles local scope
     public function scopeGetPopularArticles(Builder $query) : void
     {
         $query->has('comments', '>', 5)->take(5)->withCount('comments')->orderByDesc('comments_count');
     }
 
+
+    // Model Relationships
 
     public function category()
     {

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
-
+use App\Notifications\PasswordChangedNotification;
 use Illuminate\Support\Facades\Log;
 
 
@@ -80,6 +80,14 @@ class UserController extends Controller
         return redirect('/');
     }
 
+
+    /**
+     * Update user password
+     *
+     * @param UpdatePasswordRequest
+     *
+     *
+     */
     public function updatePassword(UpdatePasswordRequest $request, User $user)
     {
         if (!Hash::check($request->old_password, $user->password)) {
@@ -87,6 +95,9 @@ class UserController extends Controller
         };
 
         $user->update(['password' =>  bcrypt($request->password)]);
+
+        // send email to user
+        $user->notify(new PasswordChangedNotification());
 
         return back()->with('password-changed', 'password-changed');
     }
