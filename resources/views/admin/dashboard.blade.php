@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('nav-title')
     <a class="navbar-brand text-white" href="{{ route('admin.dashboard') }}">
@@ -7,43 +7,44 @@
 @endsection
 
 @section('title')
-    <title>Blog | Admin Panel</title>
+    <title>LC | Admin Panel</title>
 @endsection
 
 @section('content')
-    <div class="container">
-      <div class="operations mb-4 d-flex justify-content-around">
-        <a href="/log-viewer" class="btn btn-sm btn-warning">View Logs</a>
-        <button class="btn btn-sm bg-slate-950">Other Operations</button>
-        <button class="btn btn-sm bg-slate-950">Other Operations</button>
-        <button class="btn btn-sm bg-slate-950">Other Operations</button>
-      </div>
-      <hr>
-        <h5 class="mb-2">Users</h5>
+    <h5 class="mb-2">Users</h5>
 
-        <table class="table table-striped">
-            <thead>
-              <tr>
+    <table class="table table-striped">
+        <thead>
+            <tr>
                 <th scope="col">User ID</th>
-                <th scope="col">email</th>
+                <th scope="col">Status</th>
+                <th scope="col">Email</th>
                 <th scope="col">Name</th>
                 <th scope="col">Operations</th>
-              </tr>
-            </thead>
-            <tbody>
-                @foreach ($users as $user)
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($users as $user)
                 <tr>
-                    <td>{{$user->id }}</td>
+                    <td>{{ $user->id }}</td>
+                    <td>
+                        @if($user->email_verified_at != NULL)
+                            <span class="text-success">Verified</span>
+                        @else
+                        <span class="text-danger">Not Verified</span>
+                        @endif
+                    </td>
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->name }}</td>
-                    <td><a href="{{ route('admin.user.show', $user) }}" class="btn btn-sm bg-slate-950 hover-bg-slate-800">View user</a></td>
-                  </tr>
-                @endforeach
-            </tbody>
-          </table>
+                    <td><a href="{{ route('admin.user.show', $user) }}"
+                            class="btn btn-sm bg-slate-950 hover-bg-slate-800">View user</a></td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
 
-          <div>
-            {{ $users->links() }}
-        </div>
+    <div>
+        {{ $users->links() }}
+    </div>
     </div>
 @endsection

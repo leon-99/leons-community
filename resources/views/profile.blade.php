@@ -7,26 +7,26 @@
 @endsection
 
 @section('title')
-    <title>Blog | Profile</title>
+    <title>LC | Profile</title>
 @endsection
 
 @section('content')
     <div class="mx-4">
-        @if (session('article-delete-success'))
+        @if (session('info'))
             <div class="alert alert-success">
-                An article deleted.
+                {{ session('info') }}
             </div>
         @endif
         @if (session('status'))
-                <div class="alert alert-success" role="alert">
-                    {{ session('status') }}
-                </div>
+            <div class="alert alert-success" role="alert">
+                {{ session('status') }}
+            </div>
         @endif
-        @if (auth()->user()->email_verified_at == NULL)
+        @if (auth()->user()->email_verified_at == null)
             <div class="alert alert-warning" role="alert">
                 Please verify your email address to make posts and comments.
             </div>
-            @endif
+        @endif
         <div class="d-md-flex">
             <div class="side-bar">
                 <div class="card border-0 shadow">
@@ -49,7 +49,7 @@
                                 class="btn btn-sm bg-lime-950 hover-bg-lime-800 w-100 my-1">Settings</a>
                             @can('view-dashboard')
                                 <a href="{{ route('admin.dashboard') }}"
-                                    class="btn btn-sm bg-lime-950 hover-bg-lime-800 w-100 my-1">Admin Dashboard</a>
+                                    class="btn btn-sm bg-slate-950 hover-bg-slate-800 w-100 my-1">Admin Dashboard</a>
                             @endcan
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf

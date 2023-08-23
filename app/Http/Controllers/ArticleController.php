@@ -83,7 +83,7 @@ class ArticleController extends Controller
         }
         $article->save();
 
-        return redirect()->route('article.show', $article->id)->with("article-updated", "article updated");
+        return redirect()->route('article.show', $article->id)->with("info", "article updated");
     }
 
 
@@ -133,7 +133,7 @@ class ArticleController extends Controller
     public function delete(Article $article)
     {
         if (Gate::denies('article-delete', $article)) {
-            return back()->with('article-delete-error', "Article delete failed");
+            return back()->with('warning', "Article delete failed");
         }
         // delete the article image
         $image = 'public/' . $article->image;
@@ -144,9 +144,9 @@ class ArticleController extends Controller
 
         // redirect
         if (request()->has('from-profile') == "profile") {
-            return redirect("/home")->with("article-delete-success", "An article deleted");
+            return redirect("/home")->with("info", "An article deleted");
         }
 
-        return redirect("/")->with("article-delete-success", "An article deleted");
+        return redirect("/")->with("info", "An article deleted");
     }
 }

@@ -7,7 +7,7 @@
 @endsection
 
 @section('title')
-    <title>blog | {{ $user->name }}</title>
+    <title>LC | {{ $user->name }}</title>
 @endsection
 
 @section('content')

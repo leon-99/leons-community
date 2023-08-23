@@ -99,6 +99,6 @@ class UserController extends Controller
         // send email to user
         $user->notify(new PasswordChangedNotification());
 
-        return back()->with('password-changed', 'password-changed');
+        return back()->with('info', 'Password updated successfully.');
     }
 }

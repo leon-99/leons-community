@@ -16,7 +16,7 @@
     </head>
     <body>
         <div class="container d-flex justify-content-center align-items-center">
-            <h4>404 | Not Found</h4>
+           <h4>@yield('code') | @yield('message')</h4>
         </div>
 
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg"

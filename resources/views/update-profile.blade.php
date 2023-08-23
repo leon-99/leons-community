@@ -7,7 +7,7 @@
 @endsection
 
 @section('title')
-    <title>Blog | Settings</title>
+    <title>LC | Settings</title>
 @endsection
 
 @section('content')
@@ -21,9 +21,9 @@
                     </div>
                 @endif
 
-                @if (session('password-changed'))
+                @if (session('info'))
                     <div class="alert alert-success">
-                        Password updated successfully.
+                        {{session('info')}}
                     </div>
                 @endif
                 <div class="card border-0 shadow">

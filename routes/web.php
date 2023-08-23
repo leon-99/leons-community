@@ -1,10 +1,11 @@
 <?php
 
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use App\Http\Controllers\ArticleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\AdminController;
@@ -64,9 +65,8 @@ Route::group([
     Route::delete('/delete-user/{user}', 'deleteUser')->name('user.destroy');
     Route::delete('/delete-comment/{comment}', 'deleteComment')->name('comment.destroy');
     Route::delete('/delete-article/{article}', 'deleteArticle')->name('article.destroy');
+    Route::post('admin-permission/{user}', 'toggleAdmin')->name('user.toggle.admin');
 });
-
-
 
 
 // Email Verification Routes

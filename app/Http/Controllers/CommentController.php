@@ -26,16 +26,16 @@ class CommentController extends Controller
             'content' => $request->content,
             'edited' => 1
         ]);
-        return redirect()->route('article.show', $comment->article->id)->with('comment-update-success', 'comment-updated');
+        return redirect()->route('article.show', $comment->article->id)->with('info', 'comment-updated');
     }
 
     public function destroy(Comment $comment)
     {
         if (Gate::denies('comment-delete', $comment)) {
-            return back()->with('comment-delete-error', 'Unauthorize');
+            return back()->with('warning', 'Unauthorized');
         }
 
         $comment->delete();
-        return back()->with('comment-delete-success', 'comment deleted');
+        return back()->with('info', 'Comment deleted');
     }
 }

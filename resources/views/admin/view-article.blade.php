@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('admin.layouts.app')
 
 @section('nav-title')
     <a class="navbar-brand text-white" href="{{ route('admin.dashboard') }}">
@@ -7,12 +7,11 @@
 @endsection
 
 @section('title')
-    <title>blog | {{ substr($article->title, 0, 20) }}</title>
+    <title>LC | {{ substr($article->title, 0, 20) }}</title>
 @endsection
 
 
 @section('content')
-    <div class="container">
         <div class="card mb-2 border-0 shadow">
             <div class="card-body">
                 <div class="row d-flex justify-content-start">
@@ -111,7 +110,6 @@
                 </ul>
             </div>
         </div>
-    </div>
 
     <!-- Delete user Modal -->
     <div class="modal fade" id="deleteArticleConfirm" tabindex="-1" role="dialog"

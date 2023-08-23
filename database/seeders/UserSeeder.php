@@ -14,21 +14,16 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(10)->create();
+        User::factory(20)->create();
         User::factory()->create([
             "name" => "Win Khant Aung",
-            "email" => "leonzifer@gmail.com"
+            "email" => "leonzifer@gmail.com",
+            "is_admin" => true,
+            "profile" => 'profile-pictures/11/1692422436.png'
         ]);
         User::factory()->create([
             "name" => "Hanifah",
             "email" => "hanifah@gmail.com"
-        ]);
-
-        // admin
-        User::factory()->create([
-            "name" => "Admin",
-            "email" => "admin@gmail.com",
-            'is_admin' => true
         ]);
     }
 }

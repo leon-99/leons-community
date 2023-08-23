@@ -14,10 +14,6 @@ class CommentSeeder extends Seeder
      */
     public function run()
     {
-        Comment::factory()->count(80)->create();
-        Comment::factory()->count(10)->create([
-            'user_id' => 12,
-            'article_id' => 21
-        ]);
+        Comment::factory()->count(100)->create();
     }
 }

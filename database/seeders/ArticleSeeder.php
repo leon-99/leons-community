@@ -17,7 +17,7 @@ class ArticleSeeder extends Seeder
     {
         Article::factory()->count(20)->create();
         Article::factory()->count(5)->create([
-            'user_id' => 11
+            'user_id' => 21
         ]);
     }
 }

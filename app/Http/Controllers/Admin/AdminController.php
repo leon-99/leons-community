@@ -68,4 +68,15 @@ class AdminController extends Controller
         $comment->delete();
         return back();
     }
+
+    public function toggleAdmin(User $user)
+    {
+        $user->is_admin = !$user->is_admin;
+        $user->save();
+        if($user->is_admin) {
+            return back()->with('info', "sucessfully made {$user->name}, admin.");
+        }
+        return back()->with('info', "sucessfully removed {$user->name} from admin list.");
+
+    }
 }

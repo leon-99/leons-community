@@ -6,15 +6,12 @@
     </a>
 @endsection
 
+@section('title')
+    <title>LC | Create Article</title>
+@endsection
+
 @section('content')
     <div class="container" style="max-width: 800px;">
-
-        {{-- @if ($errors->any())
-            <div class="alert alert-warning">
-                article add faild
-            </div>
-        @endif --}}
-
         <form method="post" enctype="multipart/form-data" action="{{route('article.store')}}">
             @csrf
             <div class="mb-2">

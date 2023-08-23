@@ -7,39 +7,22 @@
 @endsection
 
 @section('title')
-    <title>blog | {{ substr($article->title, 0, 20) }}</title>
+    <title>LC | {{ substr($article->title, 0, 20) }}</title>
 @endsection
 
 
 @section('content')
     <div class="container">
-        @if (session('comment-update-success'))
+
+        @if (session('info'))
             <div class="alert alert-success">
-                Comment updated.
+               {{session('info')}}
             </div>
         @endif
 
-        @if (session('comment-delete-error'))
+        @if (session('warning'))
             <div class="alert alert-warning">
-                Not Authorized to delete the comment.
-            </div>
-        @endif
-
-        @if (session('comment-delete-success'))
-            <div class="alert alert-success">
-                Comment deleted.
-            </div>
-        @endif
-
-        @if (session('artcile-delete-success'))
-            <div class="alert alert-success">
-                Article deleted.
-            </div>
-        @endif
-
-        @if (session('article-updated'))
-            <div class="alert alert-success">
-                Article updated.
+                {{session('warning')}}
             </div>
         @endif
 
@@ -48,12 +31,6 @@
                 @foreach ($errors->all() as $error)
                     {{ $error }}
                 @endforeach
-            </div>
-        @endif
-
-        @if (session('article-delete-error'))
-            <div class="alert alert-warning">
-                Not Authorized to delete the aticle.
             </div>
         @endif
 
