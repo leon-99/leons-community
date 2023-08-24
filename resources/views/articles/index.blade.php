@@ -113,6 +113,7 @@
                 @if ($articles->count() > 0 and request()->getRequestUri() != '/')
                     <p class="text-center">Articles</p>
                 @endif
+
                 @foreach ($articles as $article)
                     <div class="card mb-2 border-0 shadow">
                         <div class="card-body">
@@ -124,7 +125,7 @@
                                 <div class="col-9 col-sm-10 col-md-10 col-lg-11 ps-0">
                                     <a href="{{ route('user.show', $article->user) }}"
                                         class="text-reset text-decoration-none"><b
-                                            class="d-block">{{ $article->user->name }}</b></a>
+                                            class="d-block">{{ $article->user->name }} @if($article->user->id == auth()->id()) (You) @endif</b></a>
                                     <small>{{ $article->created_at->diffForHumans() }}</small>
                                 </div>
                             </div>

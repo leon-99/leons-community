@@ -107,6 +107,8 @@
                     </div>
                     @endif
                 @endauth
+
+
                 <ul class="list-group mt-3 shadow border-0">
                     <li class="list-group-item">
                         <b>Comments ({{ count($article->comments) }})</b>
@@ -123,7 +125,7 @@
 
                                     <a href="{{ route('user.show', $comment->user) }}"
                                         class="text-reset text-decoration-none"><b
-                                            class="d-block">{{ $comment->user->name }}</b></a>
+                                            class="d-block">{{ $comment->user->name }}  @if($comment->user->id == auth()->id()) (You) @endif</b></a>
                                     <small>{{ $comment->created_at->diffForHumans() }}</small>
                                     @if ($comment->edited == 1)
                                         <small> | <span class="text-success">Edited</span></small>

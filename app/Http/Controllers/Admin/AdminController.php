@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 use App\Models\User;
 use App\Models\Article;
@@ -15,7 +15,9 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $users = User::latest()->paginate(10);
+        // exclude the current user
+        $users = User::where('id', '!=',auth()->id())->latest()->paginate(10);
+
         return view('admin.dashboard', ['users' => $users]);
     }
 
@@ -37,7 +39,9 @@ class AdminController extends Controller
 
     public function deleteUser(User $user)
     {
-
+        if(Gate::denies('admin-operate')) {
+            return back();
+        };
         // delete the old profile
         $oldProfile = $user->profile;
         if ($oldProfile != 'profile-pictures/default-profile.png') {
@@ -53,6 +57,10 @@ class AdminController extends Controller
 
     public function deleteArticle(Article $article)
     {
+        if(Gate::denies('admin-operate')) {
+            return back();
+        };
+
         // delete the article image
         $image = 'public/' . $article->image;
         Storage::delete($image);
@@ -65,14 +73,28 @@ class AdminController extends Controller
 
     public function deleteComment(Comment $comment)
     {
+        if(Gate::denies('admin-operate')) {
+            return back();
+        };
+
         $comment->delete();
         return back();
     }
 
     public function toggleAdmin(User $user)
     {
+        if(Gate::denies('admin-operate')) {
+            return back();
+        };
+
+        // check if the user is verified
+        if($user->email_verified_at == NULL) {
+            return back()->with('warning', 'You can not give admin permission to non-verify users.');
+        }
+
         $user->is_admin = !$user->is_admin;
         $user->save();
+
         if($user->is_admin) {
             return back()->with('info', "sucessfully made {$user->name}, admin.");
         }

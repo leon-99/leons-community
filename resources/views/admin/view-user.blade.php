@@ -18,6 +18,12 @@
         </div>
         @endif
 
+        @if(session('warning'))
+        <div class="alert alert-warning">
+            {{session('warning')}}
+        </div>
+        @endif
+
     <h5 class="mb-2">Users / user {{ $user->id }}</h5>
     <div class="my-3">
         <div class="d-flex py-3">
