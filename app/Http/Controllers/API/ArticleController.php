@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+
 Use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
@@ -29,7 +31,7 @@ class ArticleController extends Controller
      */
     public function store(StoreArticleRequest $request)
     {
-        if(Gate::denies('article-store', $request->user_id)) {
+        if(Gate::denies('article-store', $request)) {
             return response([
                 'message' => 'Unauthorized'
             ]);
@@ -41,8 +43,18 @@ class ArticleController extends Controller
         $article->body = $request->body;
         $article->category_id = $request->category_id;
         $article->user_id = $request->user_id;
+
+        if ($request->hasFile('image')) {
+
+            $imageName = 'article-images/' . auth()->user()->id . '/' . time() . '.' . $request->image->extension();
+
+            $request->image->storeAs('public', $imageName);
+            $article->image = $imageName;
+        }
+
         $article->save();
         return new ArticleResource($article);
+
     }
 
     /**
@@ -68,6 +80,18 @@ class ArticleController extends Controller
         $article->title = $request->title;
         $article->body = $request->body;
         $article->category_id = $request->category_id;
+
+        if ($request->hasFile('image')) {
+            // delete the old image
+            $oldImage = 'public/' . $article->image;
+            Storage::delete($oldImage);
+
+            // update the article
+            $imageName = 'article-images/' . auth()->user()->id . '/' . time() . '.' . $request->image->extension();
+            $request->image->storeAs('public', $imageName);
+            $article->image = $imageName;
+        }
+
         $article->save();
         return new ArticleResource($article);
     }

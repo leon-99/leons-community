@@ -14,7 +14,7 @@ class StoreArticleRequest extends FormRequest
      */
     public function authorize()
     {
-        return Gate::allows('article-store', $this->request);
+        return true;
     }
 
     /**
