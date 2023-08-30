@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreArticleRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreArticleRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        return Gate::allows('article-store', $this->request);
     }
 
     /**
@@ -27,7 +28,7 @@ class StoreArticleRequest extends FormRequest
             "title" => "required",
             "body" => "required",
             "category_id" => "required",
-            "user_id" => "sometimes",
+            "user_id" => "required",
             "image" => "mimes:jpeg,png,jpg,gif|max:3072"
         ];
     }

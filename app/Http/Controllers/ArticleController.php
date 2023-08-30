@@ -48,6 +48,10 @@ class ArticleController extends Controller
 
     public function store(StoreArticleRequest $request)
     {
+        if(Gate::denies('article-store', $request->user_id)) {
+            abort(403);
+        }
+
         $article = new Article;
         $article->title = $request->title;
         $article->body = $request->body;

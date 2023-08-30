@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use Illuminate\Support\Facades\Gate;
 Use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
@@ -24,10 +25,17 @@ class ArticleController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \App\Http\Resources\ArticleResource;
+     *
      */
     public function store(StoreArticleRequest $request)
     {
+        if(Gate::denies('article-store', $request->user_id)) {
+            return response([
+                'message' => 'Unauthorized'
+            ]);
+        }
+
+
         $article = new Article;
         $article->title = $request->title;
         $article->body = $request->body;
@@ -72,6 +80,12 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        if(Gate::denies('article-delete', $article)) {
+            return response([
+                'message' => 'Unauthorized'
+            ]);
+        }
+
         return $article->delete();
     }
 
