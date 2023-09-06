@@ -34,7 +34,7 @@ Route::group(['controller' => ArticleController::class, 'prefix' => 'articles', 
     });
     Route::post('/search', 'search')->name('search');
     Route::get('/filter/{category}', 'filterByCategory')->name('filter');
-    Route::get('/{article}', 'show')->name('show');
+    Route::get('/{id}', 'show')->name('show');
 });
 
 // comment routes

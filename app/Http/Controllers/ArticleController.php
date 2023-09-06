@@ -7,7 +7,9 @@ use App\Http\Requests\UpdateArticleRequest;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\User;
+use App\Models\Comment;
 use App\Models\Category;
+use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
@@ -27,12 +29,16 @@ class ArticleController extends Controller
     }
 
 
-    public function show(Article $article)
+    public function show($id)
     {
+        $article = Article::with('user')->find($id);
+        $comments = Comment::with('article')->with('user')->where('article_id', $article->id)->get(['*']);
+
         $categories = Category::all();
         return view('articles.detail', [
             'article' => $article,
-            "categories" => $categories
+            "categories" => $categories,
+            'comments' => $comments
         ]);
     }
 

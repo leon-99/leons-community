@@ -9,6 +9,13 @@ use Illuminate\Database\Eloquent\Builder;
 class Article extends Model
 {
     use HasFactory;
+
+    public $with = [
+        'comments',
+        'user',
+        'category'
+    ];
+
     protected $fillable = [
         "title",
         "body",

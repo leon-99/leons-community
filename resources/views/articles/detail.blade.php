@@ -111,9 +111,9 @@
 
                 <ul class="list-group mt-3 shadow border-0">
                     <li class="list-group-item">
-                        <b>Comments ({{ count($article->comments) }})</b>
+                        <b>Comments ({{ count($comments) }})</b>
                     </li>
-                    @foreach ($article->comments->reverse() as $comment)
+                    @foreach ($comments->reverse() as $comment)
                         <li class="list-group-item">
                             <div class="row d-flex justify-content-start">
                                 <div
@@ -162,7 +162,7 @@
                                                     class="pt-2 w-100">
                                                     @csrf
                                                     @method('PUT')
-                                                    <input type="hidden" name="article_id" value="{{ $comment->article_id }}">
+                                                    <input type="hidden" name="article_id" value="{{ $article->id }}">
                                                     <input type="hidden" name="user_id" value="{{ $comment->user_id }}">
                                                     <textarea name="content" class="form-control mb-2">{{ $comment->content }}</textarea>
                                                     <input type="submit" value="Update Comment"
