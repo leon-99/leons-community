@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+// test
+
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use Illuminate\Http\Request;
